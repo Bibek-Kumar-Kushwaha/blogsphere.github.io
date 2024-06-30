@@ -7,6 +7,11 @@ import Register from './Component/Pages/Register.jsx';
 import Sidebar from './Component/Layouts/Sidebar.jsx';
 import Home from './Component/Pages/Home.jsx';
 import Logout from './Component/Pages/Logout.jsx';
+import Blogs from './Component/Pages/Blogs.jsx';
+import Authors from './Component/Pages/Authors.jsx';
+import About from './Component/Pages/About.jsx';
+import Contact from './Component/Pages/Contact.jsx';
+import Services from './Component/Pages/Services.jsx';
 
 const App = () => {
   return (
@@ -18,6 +23,11 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/sidebar" element={<Sidebar />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/authors" element={<Authors/>} />
+        <Route path="/about" element={<About/>} />
+        <Route path="/contact" element={<Contact/>} />
+        <Route path="/services" element={<Services />} />
         <Route path="*" element={<Nopage />} />
       </Routes>
     </BrowserRouter>
