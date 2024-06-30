@@ -41,9 +41,9 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="my-auto space-x-2 flex justify-between">
-          <span className="font-bold my-auto bg-[#272343] text-[#F3FBFB] px-2 py-1 rounded-md">
-  <Link to='/login'>Login</Link>
-</span>
+            <span className="font-bold my-auto bg-[#272343] text-[#F3FBFB] px-2 py-1 rounded-md">
+              <Link to='/login'>Login</Link>
+            </span>
 
             <span className="font-bold my-auto">
               <label className="grid cursor-pointer place-items-center">

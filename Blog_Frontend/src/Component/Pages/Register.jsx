@@ -1,12 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useState } from 'react';
 const Register = () => {
+  const [avatar, setAvatar] = useState(null);
+
+  // Function to handle file selection
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } 
+  };
+
   return (
     <div className="flex h-screen items-center justify-center bg-[#F3FBFB]">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <form autoComplete="off">
           <h3 className="font-bold text-lg text-center text-[#272343]">Register</h3>
+
+          {/* Image */}
+          {
+            !avatar ? 
+            ''
+            :
+            <div className="bg-[#FFD803] h-24 w-24 mx-auto rounded-full">
+            <img src={avatar} alt="" className='rounded-full h-24 w-24 '/>
+            </div>
+          }
+
+          
+
           {/* Username */}
           <div className="mt-4 space-y-2">
             <label htmlFor="username" className="block text-[#272343]">Username</label>
@@ -18,6 +45,7 @@ const Register = () => {
               placeholder="Enter your full name"
               className="w-80 px-3 py-1 border rounded-md outline-none"
             />
+
           </div>
           {/* Email */}
           <div className="mt-4 space-y-2">
@@ -43,6 +71,19 @@ const Register = () => {
               className="w-80 px-3 py-1 border rounded-md outline-none"
             />
           </div>
+
+        {/* choose profile photo  */}
+            <div className="mt-4 space-y-2">
+              <label htmlFor="avatar" className="block text-[#272343]">Choose Your Avatar</label>
+              <input 
+                type="file" 
+                id="avatar" 
+                accept="image/*" 
+                onChange={handleFileChange} 
+                className="file-input w-full max-w-xs" 
+              />
+            </div>
+
           {/* Button */}
           <div className="flex justify-around mt-6">
             <button
