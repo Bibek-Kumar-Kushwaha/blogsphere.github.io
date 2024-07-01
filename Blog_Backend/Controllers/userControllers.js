@@ -4,10 +4,10 @@ import userModel from '../Models/userModels.js';
 const registerController = async (req, res) => {
     try {
         // Take data from user
-        const { name, email, password, role } = req.body;
+        const { username, email, password, role } = req.body;
 
         // Validate required fields
-        if (!name || !email || !password || !role) {
+        if (!username || !email || !password ) {
             return res.status(400).send({
                 success: false,
                 message: "Please provide all fields"
@@ -29,7 +29,7 @@ const registerController = async (req, res) => {
         
         // Creating the user
         const newUser = new userModel({
-            name,
+            username,
             email,
             password: hashedPassword,
             role

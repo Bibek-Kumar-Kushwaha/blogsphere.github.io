@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full bg-[#FFD803]">
+      <div className="w-full bg-[#FFD803] font-semibold">
         <div className="flex justify-between w-[90%] h-[48px] mx-auto bg-[#FFD803]">
           <div className="bg-slate-600 w-10 h-10 my-auto rounded-md">
             <img src={Logo} alt="logo" className='rounded-md' />
@@ -41,8 +41,8 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="my-auto space-x-2 flex justify-between">
-            <span className="font-bold my-auto bg-[#272343] text-[#F3FBFB] px-2 py-1 rounded-md">
-              <Link to='/login'>Login</Link>
+            <span className="bg-[#A7E6FF] text-[#050C9C] px-2 py-1 rounded-md text-lg font-semibold hover:bg-[#3ABEF9] transition-colors duration-300">
+              <Link to='/login' >Login</Link>
             </span>
 
             <span className="font-bold my-auto">

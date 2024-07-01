@@ -1,23 +1,39 @@
-import express from 'express'
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv'
-dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import connectDB from './Config/connectDB.js';
 import router from './Routes/userRoutes.js';
+
+dotenv.config();
+
 const app = express();
 
-app.get('/', (req,res)=>{
-    res.send("Hello i am ready to serve!!!!")
-})
-
-//middleware
+// Middleware
+app.use(cors({
+    origin: "http://localhost:5173", // Allow requests from your React frontend
+    methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  }));
 app.use(express.json());
 
+// Routes
+app.use('/api/v1/user', router);
 
-//Routes
-app.use('/api/v1/user', router)
+// Root Route
+app.get('/', (req, res) => {
+    res.send("Hello, I am ready to serve!!!!");
+});
 
-//Connect to Database
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+// Connect to Database
 connectDB();
 
-app.listen(3000);
+const PORT =  3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
