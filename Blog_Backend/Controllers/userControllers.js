@@ -121,5 +121,25 @@ const logoutController = (req, res) => {
     }
 };
 
+const getAllUser = async (req, res) => {
+    try {
 
-export { registerController, loginController, logoutController };
+        const users = await userModel.find({ });
+        if(!users){
+            return res
+                .status(404)
+                .send({success:false, message:"No user Found"});
+        }
+
+        return res
+        .status(200)
+        .json({total: users.length, success: true, data: users });
+    } catch (error) {
+        return res
+        .status(500)
+        .json({ success: false, message: 'Internal Server Error' });
+    }
+}
+
+
+export { registerController, loginController, logoutController, getAllUser };

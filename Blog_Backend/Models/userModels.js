@@ -1,34 +1,33 @@
-import mongoose from "mongoose";
-import validator from "validator";
+import mongoose from 'mongoose';
+import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
         trim: true,
-        minLength: [3, "Name must be at least 3 Characters Long"],
-        maxLength: [32, "Name must be at most 32 Characters Long"],
-     
+        minLength: [3, "Name must be at least 3 characters long"],
+        maxLength: [32, "Name must be at most 32 characters long"],
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        validator:[validator.email, "Please Provide valid Email"]
+        validate: {
+            validator: validator.isEmail,
+            message: "Please provide a valid email",
+        },
     },
     password: {
-        type : String,
+        type: String,
         required: true,
-
     },
     role: {
         type: String,
-        enum: ["Author","Reader","Admin"],
+        enum: ["Author", "Reader", "Admin"],
         required: true,
-    }
-},
-{timestamps: true}
-)
+    },
+}, { timestamps: true });
 
-const userModel = mongoose.model("User", userSchema);
+const userModel = mongoose.model('User', userSchema);
 export default userModel;

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './Config/connectDB.js';
 import router from './Routes/userRoutes.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ app.use(cors({
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 app.use(express.json()); // Middleware to parse JSON requests
-
+app.use(cookieParser());
 // Routes
 app.use('/api/v1/user', router);
 
