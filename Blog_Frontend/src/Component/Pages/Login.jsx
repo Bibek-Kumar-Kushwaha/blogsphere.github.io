@@ -1,12 +1,11 @@
-import React, { useState ,useContext} from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios'
+import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { AppContext } from "../../Context/ModeContext";
 
-
 const Login = () => {
-  const{isAuth, setIsAuth} =  useContext(AppContext)
+  const { setIsAuth } = useContext(AppContext);
 
   const [inputValues, setInputValues] = useState({
     email: '',
@@ -15,6 +14,7 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,10 +38,10 @@ const Login = () => {
         }
       );
       const { token, user } = response.data;
-          // Store token and user information in local storage
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    
+      // Store token and user information in local storage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      
       setInputValues({
         email: '',
         password: '',
@@ -58,13 +58,18 @@ const Login = () => {
         email: '',
         password: '',
       });
-      console.log(error)
+      console.error(error);
     }
     setLoading(false);
   };
 
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
-    <div className="flex h-screen items-center justify-center bg-gradient-to-br from-[#050C9C] via-[#3572EF] to-[#3ABEF9] font-semibold">
+    <div className="flex h-screen items-center justify-center bg-[#F3FBFB]">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit}>
           <h3 className="font-bold text-lg text-center text-[#272343]">Login</h3>
@@ -84,10 +89,10 @@ const Login = () => {
             />
           </div>
           {/* Password */}
-          <div className="mt-4 space-y-2">
+          <div className="mt-4 space-y-2 relative">
             <label htmlFor="password" className="block text-[#272343]">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={inputValues.password}
@@ -97,6 +102,14 @@ const Login = () => {
               aria-label="Enter your password"
               required
             />
+            <button
+              type="button"
+              className="font-semibold absolute top-7 right-3 text-[#272343] cursor-pointer"
+              onClick={togglePasswordVisibility}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
           </div>
           {/* Error Message */}
           {error && (
@@ -108,7 +121,7 @@ const Login = () => {
           <div className="flex justify-around mt-6">
             <button
               type="submit"
-              className={`bg-[#272343] text-[#F3FBFB] px-4 py-2 rounded-md transition-colors duration-300 ${loading ? 'cursor-not-allowed' : 'hover:bg-[#FFD803] hover:text-[#272343]'}`}
+              className={`bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md transition-colors duration-300 font-semibold ${loading ? 'cursor-not-allowed' : 'hover:bg-[#272343] hover:text-[#F3FBFB]'}`}
               disabled={loading}
               aria-label="Login"
             >
@@ -118,7 +131,7 @@ const Login = () => {
               Not registered?
               <Link
                 to="/register"
-                className="underline text-blue-500 cursor-pointer mx-2 font-semibold"
+                className="underline text-[#272343] cursor-pointer mx-2 font-semibold"
                 aria-label="Register"
               >
                 Register

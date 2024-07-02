@@ -5,12 +5,11 @@ import Logo from '../../assets/BlogSphere.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-import {AppContext} from '../../Context/ModeContext.jsx'
+import { AppContext } from '../../Context/ModeContext.jsx';
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const{isAuth, setIsAuth} =  useContext(AppContext)
-
+  const { isAuth, setIsAuth } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,82 +50,78 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full bg-[#FFD803] font-semibold">
-        <div className="flex justify-between w-[90%] h-[48px] mx-auto bg-[#FFD803]">
-          <div className="bg-slate-600 w-10 h-10 my-auto rounded-md">
-            <img src={Logo} alt="logo" className='rounded-md' />
+      <div className="w-full bg-[#FFD803] font-semibold sticky top-0 left-0 z-20">
+        <div className="flex justify-between w-[90%] h-[48px] mx-auto">
+          <div className="flex items-center">
+            <img src={Logo} alt="logo" className='w-10 h-10 rounded-md bg-[#BAE8E8]' />
           </div>
-          <div className="my-auto hidden md:block">
-            <ul className="flex gap-6 font-bold my-auto text-[#272343]">
-              <li className="hover:scale-110">
+          <div className="hidden md:flex items-center">
+            <ul className="flex gap-6 font-bold text-[#272343]">
+              <li className="hover:scale-110 transition-transform">
                 <Link to='/'>Home</Link>
               </li>
-              <li className="hover:scale-110">
+              <li className="hover:scale-110 transition-transform">
                 <Link to='/Blogs'>Blogs</Link>
               </li>
-              <li className="hover:scale-110">
+              <li className="hover:scale-110 transition-transform">
                 <Link to='/Authors'>Authors</Link>
               </li>
-              <li className="hover:scale-110">
+              <li className="hover:scale-110 transition-transform">
                 <Link to='/About'>About</Link>
               </li>
-              <li className="hover:scale-110">
+              <li className="hover:scale-110 transition-transform">
                 <Link to='/Contact'>Contact</Link>
               </li>
-              <li className="hover:scale-110">
+              <li className="hover:scale-110 transition-transform">
                 <Link to='/Services'>Services</Link>
               </li>
             </ul>
           </div>
-          <div className="my-auto space-x-2 flex justify-between">
-            <span className="bg-[#A7E6FF] text-[#050C9C] px-2 py-1 rounded-md text-lg font-semibold hover:bg-[#3ABEF9] transition-colors duration-300">
+          <div className="flex items-center space-x-2">
+            <span className="shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300">
               {isAuth ? (
                 <button onClick={handleLogout}>Logout</button>
               ) : (
                 <Link to='/login'>Login</Link>
               )}
             </span>
-            <span className="font-bold my-auto">
-              <label className="grid cursor-pointer place-items-center">
-                <input
-                  type="checkbox"
-                  value="synthwave"
-                  className="toggle theme-controller col-span-2 col-start-1 row-start-1 bg-[#FFF]"
-                />
-                <svg
-                  className="stroke-base-100 fill-base-100 col-start-1 row-start-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="5" />
-                  <path
-                    d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-                </svg>
-                <svg
-                  className="stroke-base-100 fill-base-100 col-start-2 row-start-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round">
-                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-              </label>
-            </span>
+
+{/* dark and light mode */}
+            {/* <label className="relative flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value="synthwave"
+                className="toggle theme-controller hidden"
+              />
+              <svg
+                className="stroke-[#272343] fill-[#272343] w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path
+                  d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+              </svg>
+              <svg
+                className="stroke-[#272343] fill-[#272343] w-6 h-6 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            </label> */}
           </div>
           <button
             onClick={toggleNav}
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-[#F3FBFB] bg-[#272343] rounded-lg md:hidden hover:bg-[#FFD803] hover:text-[#272343] focus:outline-none focus:ring-2 focus:ring-gray-200 font-bold my-auto transition-colors duration-300"
+            className="md:hidden p-2 w-10 h-10 flex items-center justify-center text-sm text-[#F3FBFB] bg-[#272343] rounded-lg hover:bg-[#FFD803] hover:text-[#272343] focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-300"
           >
             {isNavOpen ? <ImCross className="text-3xl" /> : <FaBars className="text-3xl" />}
           </button>
@@ -134,23 +129,23 @@ const Navbar = () => {
       </div>
       {isNavOpen && (
         <div className="md:hidden bg-[#FFD803]">
-          <ul className="flex flex-col gap-6 font-bold my-auto text-[#272343] text-center p-4">
-            <li className="hover:scale-110">
+          <ul className="flex flex-col gap-6 font-bold text-[#272343] text-center p-4">
+            <li className="hover:scale-110 transition-transform">
               <Link to='/'>Home</Link>
             </li>
-            <li className="hover:scale-110">
+            <li className="hover:scale-110 transition-transform">
               <Link to='/Blogs'>Blogs</Link>
             </li>
-            <li className="hover:scale-110">
+            <li className="hover:scale-110 transition-transform">
               <Link to='/Authors'>Authors</Link>
             </li>
-            <li className="hover:scale-110">
+            <li className="hover:scale-110 transition-transform">
               <Link to='/About'>About</Link>
             </li>
-            <li className="hover:scale-110">
+            <li className="hover:scale-110 transition-transform">
               <Link to='/Contact'>Contact</Link>
             </li>
-            <li className="hover:scale-110">
+            <li className="hover:scale-110 transition-transform">
               <Link to='/Services'>Services</Link>
             </li>
           </ul>

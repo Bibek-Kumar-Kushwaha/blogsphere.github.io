@@ -12,6 +12,11 @@ const registerController = async (req, res) => {
             return res.status(400).send({ success: false, message: 'All fields are required' });
         }
 
+        if(role == 'Admin')
+            {
+            return res.status(400).send({ success: false, message: 'You can not access as admin' });
+            }
+
         // Check if user already exists
         const existingUser = await userModel.findOne({ email });
         if (existingUser) {
@@ -31,7 +36,6 @@ const registerController = async (req, res) => {
             password: hashedPassword,
             role,
         });
-
         // Save the new user to the database
         await newUser.save();
 
