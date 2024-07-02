@@ -24,7 +24,7 @@ const isAuthorized = async (req, res, next) => {
         } else if (error.name === 'JsonWebTokenError') {
             return res.status(401).send({ success: false, message: "Invalid token" });
         }
-        
+
         return res.status(400).send({ success: false, message: "Error in Authorization", error });
     }
 }

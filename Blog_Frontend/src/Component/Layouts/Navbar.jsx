@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FaBars } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import Logo from '../../assets/BlogSphere.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import {AppContext} from '../../Context/ModeContext.jsx'
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const{isAuth, setIsAuth} =  useContext(AppContext)
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
-    setIsAuthenticated(!!token && !!user);
-  }, [isAuthenticated]);
+    setIsAuth(!!token && !!user);
+  }, [isAuth]);
 
   const handleLogout = async () => {
     try {
@@ -35,7 +36,7 @@ const Navbar = () => {
       localStorage.removeItem('token');
 
       // Update isAuthenticated
-      setIsAuthenticated(false);
+      setIsAuth(false);
 
       toast.success(response?.data?.message);
       navigate("/"); // Navigate immediately to home
@@ -79,7 +80,7 @@ const Navbar = () => {
           </div>
           <div className="my-auto space-x-2 flex justify-between">
             <span className="bg-[#A7E6FF] text-[#050C9C] px-2 py-1 rounded-md text-lg font-semibold hover:bg-[#3ABEF9] transition-colors duration-300">
-              {isAuthenticated ? (
+              {isAuth ? (
                 <button onClick={handleLogout}>Logout</button>
               ) : (
                 <Link to='/login'>Login</Link>

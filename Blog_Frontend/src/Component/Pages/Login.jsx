@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState ,useContext} from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
+import { AppContext } from "../../Context/ModeContext";
 
 
 const Login = () => {
+  const{isAuth, setIsAuth} =  useContext(AppContext)
+
   const [inputValues, setInputValues] = useState({
     email: '',
     password: ''
@@ -45,6 +48,7 @@ const Login = () => {
       });
 
       toast.success(response?.data?.message);
+      setIsAuth(true);
       console.log('Login successful');
 
     } catch (error) {

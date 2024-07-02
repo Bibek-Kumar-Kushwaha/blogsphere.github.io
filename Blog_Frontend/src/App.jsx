@@ -12,6 +12,7 @@ import Authors from './Component/Pages/Authors.jsx';
 import About from './Component/Pages/About.jsx';
 import Contact from './Component/Pages/Contact.jsx';
 import Services from './Component/Pages/Services.jsx';
+import Dashboard from './Component/Admin/Dashboard.jsx';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/about" element={<About/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/services" element={<Services />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<Nopage />} />
       </Routes>
     </BrowserRouter>
