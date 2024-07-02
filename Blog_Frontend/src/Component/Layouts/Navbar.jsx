@@ -1,11 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import Logo from '../../assets/BlogSphere.jpeg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    setIsAuthenticated(!!token && !!user);
+  }, [isAuthenticated]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/logout`,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Clear tokens from local storage
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+
+      // Update isAuthenticated
+      setIsAuthenticated(false);
+
+      toast.success(response?.data?.message);
+      navigate("/"); // Navigate immediately to home
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Logout failed!');
+    }
+  };
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -18,7 +55,7 @@ const Navbar = () => {
           <div className="bg-slate-600 w-10 h-10 my-auto rounded-md">
             <img src={Logo} alt="logo" className='rounded-md' />
           </div>
-          <div className="my-auto hidden md:block ">
+          <div className="my-auto hidden md:block">
             <ul className="flex gap-6 font-bold my-auto text-[#272343]">
               <li className="hover:scale-110">
                 <Link to='/'>Home</Link>
@@ -42,9 +79,12 @@ const Navbar = () => {
           </div>
           <div className="my-auto space-x-2 flex justify-between">
             <span className="bg-[#A7E6FF] text-[#050C9C] px-2 py-1 rounded-md text-lg font-semibold hover:bg-[#3ABEF9] transition-colors duration-300">
-              <Link to='/login' >Login</Link>
+              {isAuthenticated ? (
+                <button onClick={handleLogout}>Logout</button>
+              ) : (
+                <Link to='/login'>Login</Link>
+              )}
             </span>
-
             <span className="font-bold my-auto">
               <label className="grid cursor-pointer place-items-center">
                 <input
@@ -89,7 +129,6 @@ const Navbar = () => {
           >
             {isNavOpen ? <ImCross className="text-3xl" /> : <FaBars className="text-3xl" />}
           </button>
-
         </div>
       </div>
       {isNavOpen && (
@@ -116,6 +155,7 @@ const Navbar = () => {
           </ul>
         </div>
       )}
+      <Toaster />
     </>
   );
 }
