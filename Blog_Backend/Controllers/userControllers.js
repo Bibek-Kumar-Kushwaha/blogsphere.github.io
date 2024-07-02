@@ -52,56 +52,42 @@ const registerController = async (req, res) => {
 };
 
 const loginController = async (req, res) => {
-
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res
-                .status(400)
-                .send({
-                    success: false,
-                    message: "Please provide all fields"
-                });
+            return res.status(400).send({ success: false, message: "Please provide all fields" });
         }
 
         // Check if user exists or not
         const user = await userModel.findOne({ email });
         if (!user) {
-            return res
-                .status(400)
-                .send({
-                    success: false,
-                    message: "You haven't register yet!!!"
-                });
+            return res.status(400).send({ success: false, message: "You haven't registered yet!" });
         }
 
         // Check if the password matches
-        const isMatchPassword = await matchPassword(password, user.password)
+        const isMatchPassword = await matchPassword(password, user.password);
         if (!isMatchPassword) {
-            return res
-                .status(400)
-                .send({
-                    success: false, message: "Your credentials do not match"
-                });
+            return res.status(400).send({ success: false, message: "Your credentials do not match" });
         }
+
         // JWT token generation
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: `${process.env.EXPIRE_DAY || 1}d` });
 
         // Clear the password from the user object before sending it
         user.password = undefined;
 
-        // Respond with success
+        // Set the cookie with the token and configure it to last a long time
+        const maxAge = (process.env.EXPIRE_DAY || 1) * 24 * 60 * 60 * 1000; // convert days to milliseconds
         return res
-            .cookie("token", token, { httpOnly: true, secure: true })
+            .cookie("token", token, { httpOnly: true, secure: true, maxAge })
             .status(200)
             .send({ success: true, message: 'Login successful', user, token });
     } catch (error) {
         console.error('Error during user login:', error);
         return res.status(500).send({ success: false, message: 'Internal Server Error' });
     }
+};
 
-
-}
 
 const logoutController = (req, res) => {
     try {
