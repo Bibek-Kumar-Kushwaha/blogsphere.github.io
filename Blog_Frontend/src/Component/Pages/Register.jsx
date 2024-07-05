@@ -165,7 +165,7 @@ const Register = () => {
               />
             <button
               type="button"
-              className="font-semibold absolute top-1 right-3 text-[#272343] cursor-pointer"
+              className="font-semibold absolute top-1 right-3 text-[#FFF] cursor-pointer"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >

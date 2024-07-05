@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/user/alluser',
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/alluser`,
           {
             withCredentials: true,
             headers: {

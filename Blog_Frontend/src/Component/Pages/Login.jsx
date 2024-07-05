@@ -69,7 +69,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-[#F3FBFB]">
+    <div className="flex h-screen items-center justify-center bg-[#F3FBFB] font-semibold">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit}>
           <h3 className="font-bold text-lg text-center text-[#272343]">Login</h3>
@@ -104,7 +104,7 @@ const Login = () => {
             />
             <button
               type="button"
-              className="font-semibold absolute top-7 right-3 text-[#272343] cursor-pointer"
+              className="font-semibold absolute top-7 right-3 text-[#FFF] cursor-pointer"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >

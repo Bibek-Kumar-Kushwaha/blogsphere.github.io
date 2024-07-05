@@ -50,7 +50,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full bg-[#FFD803] font-semibold sticky top-0 left-0 z-20">
+      <div className="w-full bg-[#FFD803] font-semibold sticky top-0 left-0 z-20 shadow-md shadow-slate-950">
         <div className="flex justify-between w-[90%] h-[48px] mx-auto">
           <div className="flex items-center">
             <img src={Logo} alt="logo" className='w-10 h-10 rounded-md bg-[#BAE8E8]' />
