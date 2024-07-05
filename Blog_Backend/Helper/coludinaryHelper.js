@@ -3,9 +3,9 @@ import fs from 'fs';
 
 // Configuration
 cloudinary.config({
-    cloud_name: 'dvdpsq91h',
-    api_key: '855865692568394',
-    api_secret: '59wkdDWYJcDNxmi92LKiWF6D5SI'
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
 });
 
 const uploadImageOnCloudinary = async (filePath, folderName) => {
