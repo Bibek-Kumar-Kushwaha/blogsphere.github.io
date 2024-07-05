@@ -19,11 +19,7 @@ const Register = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setAvatar(file);
     }
   };
 
@@ -44,22 +40,33 @@ const Register = () => {
     setLoading(true);
     setError('');
     try {
+      const formData = new FormData();
+      formData.append('username', inputValues.username);
+      formData.append('email', inputValues.email);
+      formData.append('password', inputValues.password);
+      formData.append('role', inputValues.role);
+      if (avatar) {
+        formData.append('avatar', avatar);
+      }
+
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/register`,
-        inputValues,
+        formData,
         {
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
+
       setInputValues({
         username: '',
         email: '',
         password: '',
-        role: '',
+        role: 'Reader',
       });
+      setAvatar(null);
       toast.success(response?.data?.message);
       console.log('Registration successful');
     } catch (error) {
@@ -69,8 +76,9 @@ const Register = () => {
         username: '',
         email: '',
         password: '',
-        role: '',
+        role: 'Reader',
       });
+      setAvatar(null);
       console.error(error);
     }
     setLoading(false);
@@ -85,7 +93,11 @@ const Register = () => {
           {/* Image */}
           {avatar && (
             <div className="bg-[#BAE8E8] h-24 w-24 mx-auto rounded-full">
-              <img src={avatar} alt="Avatar" className="rounded-full h-24 w-24" />
+              <img
+                src={URL.createObjectURL(avatar)}
+                alt="Avatar"
+                className="rounded-full h-24 w-24"
+              />
             </div>
           )}
 
@@ -163,14 +175,14 @@ const Register = () => {
                 aria-label="Enter your password"
                 required
               />
-            <button
-              type="button"
-              className="font-semibold absolute top-1 right-3 text-[#FFF] cursor-pointer"
-              onClick={togglePasswordVisibility}
-              aria-label={showPassword ? "Hide password" : "Show password"}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+              <button
+                type="button"
+                className="font-semibold absolute top-1 right-3 text-[#FFF] cursor-pointer"
+                onClick={togglePasswordVisibility}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
             </div>
           </div>
 

@@ -1,21 +1,21 @@
 import { encryptPassword, matchPassword } from '../Helper/userHelper.js';
 import userModel from '../Models/userModels.js';
 import jwt from 'jsonwebtoken';
+import { uploadImageOnCloudinary } from '../Helper/coludinaryHelper.js';
 
 const registerController = async (req, res) => {
     try {
         // Extract data from request body
-        const {username, email, password, role } = req.body;
+        const { username, email, password, role } = req.body;
 
         // Validate required fields
         if (!username || !email || !password || !role) {
             return res.status(400).send({ success: false, message: 'All fields are required' });
         }
 
-        if(role == 'Admin')
-            {
+        if (role == 'Admin') {
             return res.status(400).send({ success: false, message: 'You can not access as admin' });
-            }
+        }
 
         // Check if user already exists
         const existingUser = await userModel.findOne({ email });
@@ -29,13 +29,25 @@ const registerController = async (req, res) => {
         // Encrypt user password
         const hashedPassword = await encryptPassword(password);
 
+        // Handle avatar upload if file is present
+        let avatar = {};
+        if (req.file) {
+            const result = await uploadImageOnCloudinary(req.file.path, 'avatars');
+            avatar = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
+        }
+
         // Create a new user
         const newUser = new userModel({
             username,
             email,
             password: hashedPassword,
             role,
+            avatar
         });
+
         // Save the new user to the database
         await newUser.save();
 
@@ -114,20 +126,20 @@ const logoutController = (req, res) => {
 const getAllUser = async (req, res) => {
     try {
 
-        const users = await userModel.find({ });
-        if(!users){
+        const users = await userModel.find({});
+        if (!users) {
             return res
                 .status(404)
-                .send({success:false, message:"No user Found"});
+                .send({ success: false, message: "No user Found" });
         }
 
         return res
-        .status(200)
-        .json({total: users.length, success: true, data: users });
+            .status(200)
+            .json({ total: users.length, success: true, data: users });
     } catch (error) {
         return res
-        .status(500)
-        .json({ success: false, message: 'Internal Server Error' });
+            .status(500)
+            .json({ success: false, message: 'Internal Server Error' });
     }
 }
 
