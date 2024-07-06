@@ -3,6 +3,7 @@ import userModel from '../Models/userModels.js';
 import jwt from 'jsonwebtoken';
 import { uploadImageOnCloudinary } from '../Helper/coludinaryHelper.js';
 
+//register 
 const registerController = async (req, res) => {
     try {
         // Extract data from request body
@@ -67,6 +68,7 @@ const registerController = async (req, res) => {
     }
 };
 
+//login
 const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -104,7 +106,7 @@ const loginController = async (req, res) => {
     }
 };
 
-
+//logout
 const logoutController = (req, res) => {
     try {
         res.cookie('token', '', {
@@ -123,6 +125,7 @@ const logoutController = (req, res) => {
     }
 };
 
+//get all user as a admin
 const getAllUser = async (req, res) => {
     try {
 
@@ -143,5 +146,47 @@ const getAllUser = async (req, res) => {
     }
 }
 
+//get all reader
+const readersController = async (req, res) => {
+    try {
 
-export { registerController, loginController, logoutController, getAllUser };
+        const readers = await userModel.find({ role: 'Reader' });
+        if (!readers) {
+            return res
+                .status(404)
+                .send({ success: false, message: "No user Found" });
+        }
+
+        return res
+            .status(200)
+            .json({ total: readers.length, success: true, data: readers });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ success: false, message: 'Internal Server Error' });
+    }
+}
+
+//get all author
+const authorsController = async (req, res) => {
+    try {
+
+        const authors = await userModel.find({ role: 'Author' });
+        if (!authors) {
+            return res
+                .status(404)
+                .send({ success: false, message: "No user Found" });
+        }
+
+        return res
+            .status(200)
+            .json({ total: authors.length, success: true, data: authors });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ success: false, message: 'Internal Server Error' });
+    }
+}
+
+
+export { registerController, loginController, logoutController, getAllUser, readersController, authorsController };

@@ -1,7 +1,10 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
+import dotenv from 'dotenv';
 
-// Configuration
+dotenv.config();
+
+// Configure Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
@@ -14,6 +17,7 @@ const uploadImageOnCloudinary = async (filePath, folderName) => {
             folder: folderName
         });
 
+        // Remove the file from local storage after successful upload
         try {
             fs.unlinkSync(filePath);
         } catch (error) {
@@ -22,8 +26,9 @@ const uploadImageOnCloudinary = async (filePath, folderName) => {
 
         return result;
     } catch (error) {
+        console.error('Error uploading file to Cloudinary:', error);
         throw new Error(error.message);
     }
-}
+};
 
 export { uploadImageOnCloudinary };
