@@ -188,5 +188,20 @@ const authorsController = async (req, res) => {
     }
 }
 
+//get myProfile
+const myProfileController = async (req, res) => {
+    try {
 
-export { registerController, loginController, logoutController, getAllUser, readersController, authorsController };
+        const user = req.user;
+        return res
+            .status(200)
+            .json({ success: true, data: user });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ success: false, message: 'Internal Server Error' });
+    }
+}
+
+
+export { registerController, loginController, logoutController, getAllUser, readersController, authorsController, myProfileController };
