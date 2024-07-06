@@ -4,6 +4,7 @@ import validator from 'validator';
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
+        uppercase: true,
         required: true,
         trim: true,
         minLength: [3, "Name must be at least 3 characters long"],
@@ -13,6 +14,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        lowercase: true,
         validate: {
             validator: validator.isEmail,
             message: "Please provide a valid email",
@@ -21,6 +23,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+        minLength: [8, "Password must be at least 8 characters long"],
+        maxLength: [16, "Password must be at most 16 characters long"],
     },
     role: {
         type: String,

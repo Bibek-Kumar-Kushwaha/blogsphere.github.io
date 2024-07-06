@@ -3,15 +3,15 @@ import {readersController ,authorsController,getAllUser, loginController, logout
 import { isAdmin, isAuthorized } from '../Middleware/authMiddleware.js';
 import { upload } from '../Middleware/multerMiddleware.js';
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post('/register',upload.single('avatar'), registerController);
-router.post('/login', loginController);
-router.get('/logout',logoutController);
-router.get('/readers',readersController);
-router.get('/authors',authorsController);
-router.get('/alluser',isAuthorized,isAdmin,getAllUser);
-router.get('/myprofile',isAuthorized,myProfileController);
+userRouter.post('/register',upload.single('avatar'), registerController);
+userRouter.post('/login', loginController);
+userRouter.get('/logout',logoutController);
+userRouter.get('/readers',readersController);
+userRouter.get('/authors',authorsController);
+userRouter.get('/alluser',isAuthorized,isAdmin,getAllUser);
+userRouter.get('/myprofile',isAuthorized,myProfileController);
 
-export default router;
+export default userRouter;
 

@@ -13,6 +13,7 @@ import About from './Component/Pages/About.jsx';
 import Contact from './Component/Pages/Contact.jsx';
 import Services from './Component/Pages/Services.jsx';
 import Dashboard from './Component/Admin/Dashboard.jsx';
+import MyProfile from './Component/User/MyProfile.jsx';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/about" element={<About/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/services" element={<Services />} />
+        <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<Nopage />} />
       </Routes>

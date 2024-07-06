@@ -150,7 +150,7 @@ const getAllUser = async (req, res) => {
 const readersController = async (req, res) => {
     try {
 
-        const readers = await userModel.find({ role: 'Reader' });
+        const readers = await userModel.find({ role: 'Reader' }).select('username').select('avatar');
         if (!readers) {
             return res
                 .status(404)
@@ -171,13 +171,13 @@ const readersController = async (req, res) => {
 const authorsController = async (req, res) => {
     try {
 
-        const authors = await userModel.find({ role: 'Author' });
+        const authors = await userModel.find({ role: 'Author' }).select('username').select('avatar');
         if (!authors) {
             return res
                 .status(404)
                 .send({ success: false, message: "No user Found" });
         }
-
+        
         return res
             .status(200)
             .json({ total: authors.length, success: true, data: authors });
@@ -191,7 +191,6 @@ const authorsController = async (req, res) => {
 //get myProfile
 const myProfileController = async (req, res) => {
     try {
-
         const user = req.user;
         return res
             .status(200)

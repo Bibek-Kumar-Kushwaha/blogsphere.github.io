@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './Config/connectDB.js';
-import router from './Routes/userRoutes.js';
 import cookieParser from 'cookie-parser';
+import userRouter from './Routes/userRoutes.js';
+import blogRouter from './Routes/blogRoutes.js';
 
 dotenv.config();
 
@@ -18,7 +19,8 @@ app.use(cors({
 app.use(express.json()); // Middleware to parse JSON requests
 app.use(cookieParser());
 // Routes
-app.use('/api/v1/user', router);
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/blog', blogRouter);
 
 // Root Route
 app.get('/', (req, res) => {

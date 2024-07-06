@@ -121,14 +121,14 @@ const Navbar = () => {
           </div>
           <button
             onClick={toggleNav}
-            className="md:hidden p-2 w-10 h-10 flex items-center justify-center text-sm text-[#F3FBFB] bg-[#272343] rounded-lg hover:bg-[#FFD803] hover:text-[#272343] focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-300"
+            className="md:hidden p-2 w-10 h-10 flex items-center justify-center text-sm text-[#F3FBFB] bg-[#272343] rounded-lg hover:bg-[#FFD803] hover:text-[#272343] focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-300 my-auto"
           >
             {isNavOpen ? <ImCross className="text-3xl" /> : <FaBars className="text-3xl" />}
           </button>
         </div>
       </div>
       {isNavOpen && (
-        <div className="md:hidden bg-[#FFD803]">
+        <div className="md:hidden bg-[#FFD803] ">
           <ul className="flex flex-col gap-6 font-bold text-[#272343] text-center p-4">
             <li className="hover:scale-110 transition-transform">
               <Link to='/'>Home</Link>
