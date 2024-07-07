@@ -14,6 +14,7 @@ import Contact from './Component/Pages/Contact.jsx';
 import Services from './Component/Pages/Services.jsx';
 import Dashboard from './Component/Admin/Dashboard.jsx';
 import MyProfile from './Component/User/MyProfile.jsx';
+import Postblog from './Component/Blog/Postblog.jsx';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/postblog" element={<Postblog />} />
         <Route path="*" element={<Nopage />} />
       </Routes>
     </BrowserRouter>

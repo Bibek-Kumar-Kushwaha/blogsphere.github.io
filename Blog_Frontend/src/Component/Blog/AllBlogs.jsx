@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Blogs = () => {
+const BlogList = () => {
   const [blogs, setBlogs] = useState([]); // State to store blogs
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default BlogList;

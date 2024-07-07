@@ -4,33 +4,83 @@ import { uploadImageOnCloudinary } from '../Helper/coludinaryHelper.js';
 // Create Blog
 const createBlogController = async (req, res) => {
     try {
-        const { title, intro, category, createdBy, authorName, published } = req.body;
+        const {
+            title,
+            paraOneIntro,
+            paraOneTitle,
+            paraOneDescription,
+            paraTwoIntro,
+            paraTwoTitle,
+            paraTwoDescription,
+            paraThreeIntro,
+            paraThreeTitle,
+            paraThreeDescription,
+            category,
+            published,
+        } = req.body;
 
-        if (!title || !intro || !category || !createdBy || !authorName) {
+        const createdBy = req.user._id;
+        const authorName = req.user.username;
+        const authorAvatar = req.user.avatar.url;
+
+        if (!title || !paraOneIntro || !paraOneTitle || !paraOneDescription || !category) {
             return res.status(400).send({ success: false, message: 'All fields are required' });
         }
 
-        let mainImage = {};
-        if (req.file) {
-            const result = await uploadImageOnCloudinary(req.file.path, 'blog_images');
-            mainImage = {
-                public_id: result.public_id,
-                url: result.secure_url
-            };
-        } else {
+        // Check if the main image file is uploaded
+        if (!req.files.mainImage) {
             return res.status(400).send({ success: false, message: 'Main image is required' });
         }
 
-        const newBlog = new blogModel({
+        // Handle main image upload
+        const resultMainImage = await uploadImageOnCloudinary(req.files.mainImage[0].path, 'blog_images');
+        const mainImage = {
+            public_id: resultMainImage.public_id,
+            url: resultMainImage.secure_url
+        };
+
+        // Check if the secondary images are uploaded (optional)
+        let secondaryImageOne = {};
+        let secondaryImageTwo = {};
+
+        if (req.files.secondaryImageOne) {
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageOne[0].path, 'blog_images');
+            secondaryImageOne = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
+        }
+
+        if (req.files.secondaryImageTwo) {
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageTwo[0].path, 'blog_images');
+            secondaryImageTwo = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
+        }
+
+        const blogData = {
             title,
-            mainImage,
-            intro,
+            paraOneIntro,
+            paraOneDescription,
+            paraOneTitle,
+            paraTwoIntro,
+            paraTwoDescription,
+            paraTwoTitle,
+            paraThreeIntro,
+            paraThreeDescription,
+            paraThreeTitle,
             category,
             createdBy,
+            authorAvatar,
             authorName,
-            published: true || false,
-        });
+            published,
+            mainImage,
+            secondaryImageOne,
+            secondaryImageTwo,
+        };
 
+        const newBlog = new blogModel(blogData);
         await newBlog.save();
 
         return res.status(201).send({
@@ -93,12 +143,44 @@ const getBlogController = async (req, res) => {
 const updateBlogController = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, intro, category, published } = req.body;
-        let mainImage = {};
+        const {
+            title,
+            paraOneIntro,
+            paraOneTitle,
+            paraOneDescription,
+            paraTwoIntro,
+            paraTwoTitle,
+            paraTwoDescription,
+            paraThreeIntro,
+            paraThreeTitle,
+            paraThreeDescription,
+            category,
+            published,
+        } = req.body;
 
-        if (req.file) {
-            const result = await uploadImageOnCloudinary(req.file.path, 'blog_images');
+        let mainImage = {};
+        let secondaryImageOne = {};
+        let secondaryImageTwo = {};
+
+        if (req.files && req.files.mainImage) {
+            const result = await uploadImageOnCloudinary(req.files.mainImage[0].path, 'blog_images');
             mainImage = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
+        }
+
+        if (req.files && req.files.secondaryImageOne) {
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageOne[0].path, 'blog_images');
+            secondaryImageOne = {
+                public_id: result.public_id,
+                url: result.secure_url
+            };
+        }
+
+        if (req.files && req.files.secondaryImageTwo) {
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageTwo[0].path, 'blog_images');
+            secondaryImageTwo = {
                 public_id: result.public_id,
                 url: result.secure_url
             };
@@ -107,7 +189,17 @@ const updateBlogController = async (req, res) => {
         const updatedBlog = await blogModel.findByIdAndUpdate(id, {
             title,
             mainImage,
-            intro,
+            secondaryImageOne,
+            secondaryImageTwo,
+            paraOneIntro,
+            paraOneTitle,
+            paraOneDescription,
+            paraTwoIntro,
+            paraTwoTitle,
+            paraTwoDescription,
+            paraThreeIntro,
+            paraThreeTitle,
+            paraThreeDescription,
             category,
             published
         }, { new: true });

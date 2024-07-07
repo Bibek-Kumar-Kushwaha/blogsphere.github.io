@@ -5,7 +5,7 @@ import { upload } from '../Middleware/multerMiddleware.js';
 
 const userRouter = express.Router();
 
-userRouter.post('/register',upload.single('avatar'), registerController);
+userRouter.post('/register',upload, registerController);
 userRouter.post('/login', loginController);
 userRouter.get('/logout',logoutController);
 userRouter.get('/readers',readersController);

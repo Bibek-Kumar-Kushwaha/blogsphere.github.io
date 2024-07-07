@@ -77,17 +77,18 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <div className="flex items-center space-x-2">
-            <span className="shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300">
-              {isAuth ? (
-                <button onClick={handleLogout}>Logout</button>
-              ) : (
-                <Link to='/login'>Login</Link>
-              )}
-            </span>
+          <div className="flex space-x-4">
+            <div className="flex items-center space-x-2">
+              <span className="shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300">
+                {isAuth ? (
+                  <button onClick={handleLogout}>Logout</button>
+                ) : (
+                  <Link to='/login'>Login</Link>
+                )}
+              </span>
 
-{/* dark and light mode */}
-            {/* <label className="relative flex items-center cursor-pointer">
+              {/* dark and light mode */}
+              {/* <label className="relative flex items-center cursor-pointer">
               <input
                 type="checkbox"
                 value="synthwave"
@@ -118,13 +119,14 @@ const Navbar = () => {
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             </label> */}
+            </div>
+            <button
+              onClick={toggleNav}
+              className="md:hidden p-2 w-10 h-10 flex items-center justify-center text-sm text-[#F3FBFB] bg-[#272343] rounded-lg hover:bg-[#FFD803] hover:text-[#272343] focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-300 my-auto"
+            >
+              {isNavOpen ? <ImCross className="text-3xl" /> : <FaBars className="text-3xl" />}
+            </button>
           </div>
-          <button
-            onClick={toggleNav}
-            className="md:hidden p-2 w-10 h-10 flex items-center justify-center text-sm text-[#F3FBFB] bg-[#272343] rounded-lg hover:bg-[#FFD803] hover:text-[#272343] focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-300 my-auto"
-          >
-            {isNavOpen ? <ImCross className="text-3xl" /> : <FaBars className="text-3xl" />}
-          </button>
         </div>
       </div>
       {isNavOpen && (

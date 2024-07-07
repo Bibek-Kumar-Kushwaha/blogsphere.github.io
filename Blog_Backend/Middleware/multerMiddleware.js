@@ -19,4 +19,10 @@ const storage = multer.diskStorage({
   }
 });
 
-export const upload = multer({ storage: storage });
+// Setting up multer middleware for fields
+export const upload = multer({ storage: storage }).fields([
+  { name: 'mainImage', maxCount: 1 },
+  { name: 'secondaryImageOne', maxCount: 1 },
+  { name: 'secondaryImageTwo', maxCount: 1 },
+  { name: 'avatar', maxCount: 1 } 
+]);

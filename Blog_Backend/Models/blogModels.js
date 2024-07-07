@@ -1,31 +1,29 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const blogSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        minLength: [10, "Blog Title must be contain at least 10 character"],
-        maxLength: [40, "Blog Title cannot exceed 40 character!"],
+        minLength: [10, "Blog Title must be contain at least 10 characters"],
+        maxLength: [40, "Blog Title cannot exceed 40 characters"],
     },
     mainImage: {
         public_id: {
             type: String,
-            required: true,
         },
         url: {
             type: String,
-            required: true,
         }
     },
-    intro: {
-        type: String,
-        required: true,
-        minLength: [250, "Blog Intro must be contain at least 250 character"],
+    secondaryImageOne: {
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        }
     },
-    paraOneTitle: {
-        type: String,
-    },
-    paraOneImage: {
+    secondaryImageTwo: {
         public_id: {
             type: String,
         },
@@ -35,49 +33,37 @@ const blogSchema = new mongoose.Schema({
     },
     paraOneIntro: {
         type: String,
-        minLength: [150, "Blog Intro must be contain at least 250 character"],
+        required: true,
+        minLength: [250, "Blog Intro must contain at least 250 characters"],
+    },
+    paraOneTitle: {
+        type: String,
     },
     paraOneDescription: {
         type: String,
-        minLength: [50, "paragraph one description must be contain at least 250 character"],
+        minLength: [50, "Paragraph one description must contain at least 50 characters"],
     },
     paraTwoTitle: {
         type: String,
     },
-    paraTwoImage: {
-        public_id: {
-            type: String,
-        },
-        url: {
-            type: String,
-        }
-    },
     paraTwoIntro: {
         type: String,
-        minLength: [150, "Blog Intro must be contain at least 250 character"],
+        minLength: [150, "Blog Intro must contain at least 150 characters"],
     },
     paraTwoDescription: {
         type: String,
-        minLength: [50, "paragraph one description must be contain at least 250 character"],
+        minLength: [50, "Paragraph two description must contain at least 50 characters"],
     },
     paraThreeTitle: {
         type: String,
     },
-    paraThreeImage: {
-        public_id: {
-            type: String,
-        },
-        url: {
-            type: String,
-        }
-    },
     paraThreeIntro: {
         type: String,
-        minLength: [150, "Blog Intro must be contain at least 250 character"],
+        minLength: [150, "Blog Intro must contain at least 150 characters"],
     },
     paraThreeDescription: {
         type: String,
-        minLength: [50, "paragraph one description must be contain at least 250 character"],
+        minLength: [50, "Paragraph three description must contain at least 50 characters"],
     },
     category: {
         type: String,
@@ -94,13 +80,13 @@ const blogSchema = new mongoose.Schema({
     },
     authorAvatar: {
         type: String,
+        required: true,
     },
     published: {
         type: Boolean,
         default: false,
     },
+});
 
-})
-
-const blogModel = new mongoose.model("Blog", blogSchema);
+const blogModel = mongoose.model('Blog', blogSchema);
 export default blogModel;
