@@ -15,6 +15,8 @@ import Services from './Component/Pages/Services.jsx';
 import Dashboard from './Component/Admin/Dashboard.jsx';
 import MyProfile from './Component/User/MyProfile.jsx';
 import Postblog from './Component/Blog/Postblog.jsx';
+import Footer from './Component/Pages/Footer.jsx';
+// import AllBlogs from './Component/Blog/AllBlogs.jsx';
 
 const App = () => {
   return (
@@ -27,13 +29,16 @@ const App = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/sidebar" element={<Sidebar />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/authors" element={<Authors/>} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/contact" element={<Contact/>} />
+        <Route path="/authors" element={<Authors />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/postblog" element={<Postblog />} />
+        <Route path="/sidebar" element={<Sidebar/>}/>
+        <Route path="/footer" element={<Footer/>}/>
+        {/* <Route path="/allblog" element={<AllBlogs />} /> */}
         <Route path="*" element={<Nopage />} />
       </Routes>
     </BrowserRouter>

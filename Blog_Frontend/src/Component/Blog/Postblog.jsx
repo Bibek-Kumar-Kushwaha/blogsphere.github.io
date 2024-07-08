@@ -50,31 +50,34 @@ const PostBlog = () => {
     setError('');
 
     try {
-      const inputValues = new inputValues();
-      inputValues.append('title', inputValues.title);
-      inputValues.append('paraOneIntro', inputValues.paraOneIntro);
-      inputValues.append('paraOneTitle', inputValues.paraOneTitle);
-      inputValues.append('paraOneDescription', inputValues.paraOneDescription);
-      inputValues.append('paraTwoIntro', inputValues.paraTwoIntro);
-      inputValues.append('paraTwoTitle', inputValues.paraTwoTitle);
-      inputValues.append('paraTwoDescription', inputValues.paraTwoDescription);
-      inputValues.append('paraThreeIntro', inputValues.paraThreeIntro);
-      inputValues.append('paraThreeTitle', inputValues.paraThreeTitle);
-      inputValues.append('paraThreeDescription', inputValues.paraThreeDescription);
-      inputValues.append('category', inputValues.category);
-      inputValues.append('published', inputValues.published);
+      // Create FormData object
+      const formData = new FormData();
+      formData.append('title', inputValues.title);
+      formData.append('paraOneIntro', inputValues.paraOneIntro);
+      formData.append('paraOneTitle', inputValues.paraOneTitle);
+      formData.append('paraOneDescription', inputValues.paraOneDescription);
+      formData.append('paraTwoIntro', inputValues.paraTwoIntro);
+      formData.append('paraTwoTitle', inputValues.paraTwoTitle);
+      formData.append('paraTwoDescription', inputValues.paraTwoDescription);
+      formData.append('paraThreeIntro', inputValues.paraThreeIntro);
+      formData.append('paraThreeTitle', inputValues.paraThreeTitle);
+      formData.append('paraThreeDescription', inputValues.paraThreeDescription);
+      formData.append('category', inputValues.category);
+      formData.append('published', inputValues.published);
 
+      // Append images if they exist
       if (mainImage) {
-        inputValues.append('mainImage', mainImage);
+        formData.append('mainImage', mainImage);
       }
       if (secondaryImageOne) {
-        inputValues.append('secondaryImageOne', secondaryImageOne);
+        formData.append('secondaryImageOne', secondaryImageOne);
       }
       if (secondaryImageTwo) {
-        inputValues.append('secondaryImageTwo', secondaryImageTwo);
+        formData.append('secondaryImageTwo', secondaryImageTwo);
       }
-      console.log(...inputValues.entries());
-      const response = await axios.post('http://localhost:3000/api/v1/blog/create', inputValues, {
+
+      // Make POST request to server
+      const response = await axios.post('http://localhost:3000/api/v1/blog/create', formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -83,22 +86,20 @@ const PostBlog = () => {
 
       console.log('Blog created successfully:', response.data);
       // Reset form state after successful submission
-   
-      // setInputValues({
-      //   title: '',
-      //   paraOneIntro: '',
-      //   paraOneTitle: '',
-      //   paraOneDescription: '',
-      //   paraTwoIntro: '',
-      //   paraTwoTitle: '',
-      //   paraTwoDescription: '',
-      //   paraThreeIntro: '',
-      //   paraThreeTitle: '',
-      //   paraThreeDescription: '',
-      //   category: '',
-      //   published: false,
-    
-      // });
+      setInputValues({
+        title: '',
+        paraOneIntro: '',
+        paraOneTitle: '',
+        paraOneDescription: '',
+        paraTwoIntro: '',
+        paraTwoTitle: '',
+        paraTwoDescription: '',
+        paraThreeIntro: '',
+        paraThreeTitle: '',
+        paraThreeDescription: '',
+        category: '',
+        published: false,
+      });
       setMainImage(null);
       setSecondaryImageOne(null);
       setSecondaryImageTwo(null);
@@ -110,10 +111,11 @@ const PostBlog = () => {
     }
   };
 
+
   return (
     <>
-      <div className="w-full bg-[#F3FBFB]">
-        <div className="w-[90%] mx-auto mt-8">
+      <div className=" bg-[#F3FBFB] font-semibold">
+        <div className="bg-white p-6 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold mb-4 text-center text-[#272343]">Create a New Blog Post</h1>
           <form onSubmit={handleFormSubmit} className="max-w-lg mx-auto">
 
@@ -273,7 +275,7 @@ const PostBlog = () => {
                 type="file"
                 id="mainImage"
                 name="mainImage"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#272343]"
+                className="file-input w-full"
                 onChange={handleFileChange}
                 accept="image/*"
                 required
@@ -287,7 +289,7 @@ const PostBlog = () => {
                 type="file"
                 id="secondaryImageOne"
                 name="secondaryImageOne"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#272343]"
+                className="file-input w-full"
                 onChange={handleFileChange}
                 accept="image/*"
               />
@@ -300,7 +302,7 @@ const PostBlog = () => {
                 type="file"
                 id="secondaryImageTwo"
                 name="secondaryImageTwo"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#272343]"
+                className="file-input w-full"
                 onChange={handleFileChange}
                 accept="image/*"
               />
@@ -318,14 +320,16 @@ const PostBlog = () => {
                 onChange={(e) => setInputValues({ ...inputValues, published: e.target.checked })}
               />
             </div>
-                  {/* Error message */}
-      {error && <p>{error}</p>}
+            {/* Error message */}
+            {error && <div className="mt-4 text-red-600">{error}</div>}
             <button
               type="submit"
+              className={`bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md transition-colors duration-300 ${loading ? 'cursor-not-allowed' : 'hover:bg-[#272343] hover:text-[#F3FBFB]'
+                }`}
               disabled={loading}
-              className=" bg-[#FFD803] hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
+              aria-label="Post_Blog"
             >
-             {loading ? 'Posting...' : 'Post Blog'}
+              {loading ? 'Posting...' : 'Post Blog'}
             </button>
           </form>
         </div>

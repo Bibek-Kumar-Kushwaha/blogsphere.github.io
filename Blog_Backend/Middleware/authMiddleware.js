@@ -43,4 +43,18 @@ const isAdmin = async (req, res, next) => {
     }
 }
 
-export { isAuthorized, isAdmin };
+const isAuthor = async (req, res, next) => {
+    try {
+        const user = req._id;
+        console.log(user)
+        if (!user || user.role !== "Author") {
+            return res.status(401).send({ success: false, message: "You are not authorized" });
+        }
+        next();
+    } catch (error) {
+        console.error('Author authorization error:', error);
+        return res.status(400).send({ success: false, message: "Only Author can access this", error });
+    }
+}
+
+export { isAuthorized, isAdmin, isAuthor };

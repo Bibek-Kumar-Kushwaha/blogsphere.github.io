@@ -3,6 +3,7 @@ import { uploadImageOnCloudinary } from '../Helper/coludinaryHelper.js';
 
 // Create Blog
 const createBlogController = async (req, res) => {
+
     try {
         const {
             title,
@@ -101,7 +102,8 @@ const createBlogController = async (req, res) => {
 // Get All Blogs
 const getAllBlogsController = async (req, res) => {
     try {
-        const blogs = await blogModel.find();
+
+        const blogs = await blogModel.find({ published: true });
         return res.status(200).send({
             success: true,
             total: blogs.length,
@@ -138,6 +140,28 @@ const getBlogController = async (req, res) => {
         });
     }
 };
+
+//Get My Blogs
+const getMyBlogController = async (req, res) => {
+    try {
+        const createdBy = req.user._id;
+        const blogs = await blogModel.find({ createdBy });
+
+        if (!blogs) {
+            return res.status(404).send({ success: false, message: 'Blog not found' });
+        }
+        return res.status(200).send({
+            success: true,
+            blogs
+        });
+    } catch (error) {
+        console.error('Error fetching blog:', error);
+        return res.status(500).send({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+}
 
 // Update Blog
 const updateBlogController = async (req, res) => {
@@ -251,5 +275,7 @@ export {
     getAllBlogsController,
     getBlogController,
     updateBlogController,
+    getMyBlogController,
     deleteBlogController
 };
+
