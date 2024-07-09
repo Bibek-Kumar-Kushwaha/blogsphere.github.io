@@ -17,5 +17,5 @@ blogRouter.get('/all',getAllBlogsController);
 blogRouter.get('/:id', getBlogController);
 blogRouter.put('/update/:id', isAuthorized, upload, updateBlogController);
 blogRouter.delete('/delete/:id', isAuthorized, deleteBlogController);
-blogRouter.get('/myblogs',getMyBlogController);
+blogRouter.get('/myblogs/:id',getMyBlogController);
 export default blogRouter;

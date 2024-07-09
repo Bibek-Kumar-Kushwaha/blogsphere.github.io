@@ -144,8 +144,8 @@ const getBlogController = async (req, res) => {
 //Get My Blogs
 const getMyBlogController = async (req, res) => {
     try {
-        const createdBy = req.user._id;
-        const blogs = await blogModel.find({ createdBy });
+        const { id } = req.params;
+        const blogs = await blogModel.find({ createdBy: id });
 
         if (!blogs) {
             return res.status(404).send({ success: false, message: 'Blog not found' });
