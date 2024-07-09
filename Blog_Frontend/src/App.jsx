@@ -42,7 +42,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/postblog" element={<Postblog />} />
         <Route path="/sidebar" element={<Sidebar />} />
-        <Route path="/myblog" element={<Myblog />} />
+        <Route path="/myblog/:id" element={<Myblog />} />
         <Route path="/alluser" element={<Alluser/>}/>
         <Route path="/updateblog" element={<Updateblog />} />
         <Route path="blogs/singleblog/:id" element={<Singleblog/>}/>
