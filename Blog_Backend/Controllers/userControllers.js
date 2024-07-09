@@ -58,7 +58,7 @@ const registerController = async (req, res) => {
             message: "User registered successfully",
             user: newUser
         });
-
+        
     } catch (error) {
         console.error('Error during user registration:', error);
         return res.status(500).send({
@@ -192,9 +192,16 @@ const authorsController = async (req, res) => {
 const myProfileController = async (req, res) => {
     try {
         const user = req.user;
+        if (!user) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+          }
+        const userProfile = await userModel.findById(user._id).select('-password');
+        if (!userProfile) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+          }
         return res
             .status(200)
-            .json({ success: true, data: user });
+            .json({ success: true, data: userProfile });
     } catch (error) {
         return res
             .status(500)

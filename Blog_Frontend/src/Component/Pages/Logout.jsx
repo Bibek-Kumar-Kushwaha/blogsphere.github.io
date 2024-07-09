@@ -2,11 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../Context/ModeContext';
 
 const Logout = () => {
-  const{isAuth, setIsAuth} =  useContext(AppContext)
-
+ 
   const navigate = useNavigate(); 
   const LogoutUser = async () => {
     try {

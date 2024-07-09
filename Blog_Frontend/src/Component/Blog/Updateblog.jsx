@@ -1,7 +1,8 @@
 import React from 'react'
 
-export const Updateblog = () => {
+const Updateblog = () => {
   return (
     <div>Updateblog</div>
   )
 }
+export default Updateblog;
