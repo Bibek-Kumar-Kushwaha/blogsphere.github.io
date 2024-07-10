@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import notFound from '../../assets/NotFound.png';
-
+import toast, { Toaster } from 'react-hot-toast';
 const Nopage = () => {
+  toast.error("Not any Route Found Click Go to Home");
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-[#F3FBFB] via-[#BAE8E8] to-[#FFD803]">
       <div className="p-8 bg-white rounded-lg shadow-lg">
@@ -18,6 +19,7 @@ const Nopage = () => {
           </Link>
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 };

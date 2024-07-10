@@ -57,4 +57,11 @@ const isAuthor = async (req, res, next) => {
     }
 }
 
-export { isAuthorized, isAdmin, isAuthor };
+const checkUserAccess = (req, res, next) => {
+    if (req.params.id !== req.user.id.toString()) {
+      return res.status(403).send({ success: false, message: "You are not authorized to access this resource" });
+    }
+    next();
+  };
+
+export { isAuthorized, isAdmin, isAuthor, checkUserAccess };

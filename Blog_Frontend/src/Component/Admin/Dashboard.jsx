@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext} from 'react';
 import axios from 'axios';
 import UserCard from './UserCard.jsx';
-import { AppContext } from '../../Context/ModeContext.jsx';
+import toast, {Toaster} from 'react-hot-toast';
+import { Navigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -22,6 +23,7 @@ const Dashboard = () => {
         setUsers(response.data);
         setLoading(false);
       } catch (error) {
+        toast.error(error.response?.data?.message);
         setError(error.message);
         setLoading(false);
       }
@@ -31,7 +33,12 @@ const Dashboard = () => {
   }, []);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+
+    if (error) {
+      return <div>
+        <Navigate to={"/"} />
+        </div>;
+    }
 
   return (
     <div className="min-h-screen bg-[#F3FBFB] text-[#272343] p-8">
@@ -46,6 +53,7 @@ const Dashboard = () => {
          }
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 };

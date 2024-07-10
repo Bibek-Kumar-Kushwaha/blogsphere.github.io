@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { AppContext } from "../../Context/ModeContext";
 
-const Login = () => {
-  const { setIsAuth } = useContext(AppContext);
 
+const Login = () => {
+  const { setIsAuth, isAuth } = useContext(AppContext);
   const [inputValues, setInputValues] = useState({
     email: '',
     password: ''
@@ -38,10 +38,10 @@ const Login = () => {
         }
       );
       const { token, user } = response.data;
-      // Store token and user information in local storage
+
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
-      
+
       setInputValues({
         email: '',
         password: '',
@@ -67,6 +67,7 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
 
   return (
     <div className="flex h-screen items-center justify-center bg-[#F3FBFB] font-semibold">

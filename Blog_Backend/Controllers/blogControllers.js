@@ -182,6 +182,9 @@ const updateBlogController = async (req, res) => {
             published,
         } = req.body;
 
+        console.log('Received body:', req.body);
+        console.log('Received files:', req.files);
+
         let mainImage = {};
         let secondaryImageOne = {};
         let secondaryImageTwo = {};
@@ -192,6 +195,7 @@ const updateBlogController = async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             };
+            console.log('Main image uploaded:', mainImage);
         }
 
         if (req.files && req.files.secondaryImageOne) {
@@ -200,6 +204,7 @@ const updateBlogController = async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             };
+            console.log('Secondary image one uploaded:', secondaryImageOne);
         }
 
         if (req.files && req.files.secondaryImageTwo) {
@@ -208,13 +213,11 @@ const updateBlogController = async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             };
+            console.log('Secondary image two uploaded:', secondaryImageTwo);
         }
 
-        const updatedBlog = await blogModel.findByIdAndUpdate(id, {
+        const updateFields = {
             title,
-            mainImage,
-            secondaryImageOne,
-            secondaryImageTwo,
             paraOneIntro,
             paraOneTitle,
             paraOneDescription,
@@ -226,7 +229,15 @@ const updateBlogController = async (req, res) => {
             paraThreeDescription,
             category,
             published
-        }, { new: true });
+        };
+
+        if (Object.keys(mainImage).length) updateFields.mainImage = mainImage;
+        if (Object.keys(secondaryImageOne).length) updateFields.secondaryImageOne = secondaryImageOne;
+        if (Object.keys(secondaryImageTwo).length) updateFields.secondaryImageTwo = secondaryImageTwo;
+
+        console.log('Update fields:', updateFields);
+
+        const updatedBlog = await blogModel.findByIdAndUpdate(id, updateFields, { new: true });
 
         if (!updatedBlog) {
             return res.status(404).send({ success: false, message: 'Blog not found' });
@@ -245,6 +256,7 @@ const updateBlogController = async (req, res) => {
         });
     }
 };
+
 
 // Delete Blog
 const deleteBlogController = async (req, res) => {

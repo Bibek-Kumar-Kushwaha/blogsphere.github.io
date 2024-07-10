@@ -17,7 +17,6 @@ import MyProfile from './Component/User/MyProfile.jsx';
 import Postblog from './Component/Blog/Postblog.jsx';
 import Footer from './Component/Pages/Footer.jsx';
 import Myblog from './Component/Blog/Myblog.jsx';
-
 import Updateblog from './Component/Blog/Updateblog.jsx';
 import DeleteBlog from './Component/Blog/DeleteBlog.jsx';
 import Singleblog from './Component/Blog/Singleblog.jsx';
@@ -41,13 +40,13 @@ const App = () => {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/postblog" element={<Postblog />} />
-        <Route path="/sidebar" element={<Sidebar />} />
+        <Route path="/sidebar/:id" element={<Sidebar />} />
         <Route path="/myblog/:id" element={<Myblog />} />
         <Route path="/alluser" element={<Alluser/>}/>
-        <Route path="/updateblog" element={<Updateblog />} />
+        <Route path="/update/:id" element={<Updateblog />} />
         <Route path="blogs/singleblog/:id" element={<Singleblog/>}/>
         <Route path="/footer" element={<Footer />} />
-        <Route path="/deleteblog" element={<DeleteBlog />} />
+        <Route path="/delete/:id" element={<DeleteBlog />} />
         <Route path="*" element={<Nopage />} />
       </Routes>
     </BrowserRouter>

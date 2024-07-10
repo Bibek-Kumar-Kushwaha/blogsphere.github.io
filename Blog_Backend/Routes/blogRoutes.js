@@ -5,9 +5,9 @@ import {
     getBlogController,
     updateBlogController,
     deleteBlogController,
-    getMyBlogController
+    getMyBlogController,
 } from '../Controllers/blogControllers.js';
-import { isAuthorized } from '../Middleware/authMiddleware.js';
+import { checkUserAccess, isAuthorized } from '../Middleware/authMiddleware.js';
 import { upload } from '../Middleware/multerMiddleware.js';
 
 const blogRouter = express.Router();
@@ -15,7 +15,7 @@ const blogRouter = express.Router();
 blogRouter.post('/create',isAuthorized,upload, createBlogController);
 blogRouter.get('/all',getAllBlogsController);
 blogRouter.get('/:id', getBlogController);
-blogRouter.put('/update/:id', isAuthorized, upload, updateBlogController);
-blogRouter.delete('/delete/:id', isAuthorized, deleteBlogController);
-blogRouter.get('/myblogs/:id',getMyBlogController);
+blogRouter.put('/update/:id', isAuthorized, checkUserAccess,upload, updateBlogController);
+blogRouter.delete('/delete/:id', isAuthorized,checkUserAccess ,deleteBlogController);
+blogRouter.get('/myblogs/:id',isAuthorized,checkUserAccess,getMyBlogController);
 export default blogRouter;

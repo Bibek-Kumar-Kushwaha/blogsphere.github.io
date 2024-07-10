@@ -4,7 +4,7 @@ const UserCard = ({ user }) => {
   return (
     <div className="container mx-auto p-4 text-[#272343]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {user.data.map((data, id) => ( // Updated to map over user directly assuming user is an array
+        {user.data.map((data, id) => ( 
           <div key={id} className="bg-[#BAE8E8] rounded-lg shadow-md p-4">
             <figure className="flex justify-center">
               <img

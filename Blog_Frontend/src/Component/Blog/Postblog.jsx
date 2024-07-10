@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import axios from 'axios';
+import { AppContext } from '../../Context/ModeContext'; 
+import { Navigate } from 'react-router-dom';
 
 const PostBlog = () => {
+  const { isAuth } = useContext(AppContext);
   const [inputValues, setInputValues] = useState({
     title: '',
     paraOneIntro: '',
@@ -111,6 +114,11 @@ const PostBlog = () => {
     }
   };
 
+  if (!isAuth) {
+    return <div>
+      <Navigate to={"/"} />
+      </div>;
+  }
 
   return (
     <>

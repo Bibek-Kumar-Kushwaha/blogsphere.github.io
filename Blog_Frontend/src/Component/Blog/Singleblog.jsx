@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SingleBlog = () => {
   const [blog, setBlog] = useState(null);
@@ -11,9 +12,9 @@ const SingleBlog = () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/blog/${id}`);
         setBlog(response.data.blog);
-        console.log(response.data.blog);
       } catch (error) {
         console.error('Error fetching blog:', error);
+        toast.error(error.response?.data?.message);
       }
     };
     fetchBlog();
@@ -85,6 +86,7 @@ const SingleBlog = () => {
           <div className="text-gray-700">{paraThreeDescription}</div>
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 };

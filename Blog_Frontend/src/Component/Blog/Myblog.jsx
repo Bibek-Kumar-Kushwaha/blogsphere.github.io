@@ -1,26 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { AppContext } from '../../Context/ModeContext'; 
+import { Navigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const MyBlog = () => {
-  const [blogs, setBlogs] = useState([]); // Use an array to store multiple blogs
-  const { id } = useParams(); // Get the id parameter from the URL
+  const [blogs, setBlogs] = useState([]);
+  const { id } = useParams();
+  const { isAuth } = useContext(AppContext);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        // Fetch all blogs belonging to the user with id
-        const response = await axios.get(`http://localhost:3000/api/v1/blog/myblogs/${id}`);
-        setBlogs(response.data.blogs); // Set the fetched blogs into state
+        const response = await axios.get(`http://localhost:3000/api/v1/blog/myblogs/${id}`,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setBlogs(response.data.blogs); 
       } catch (error) {
+        toast.error(error.response?.data?.message);
         console.error('Error fetching blogs:', error);
       }
     };
     fetchBlogs();
-  }, [id]); // Depend on id to refetch when id changes
+  }, [id]);
+
+  if (!isAuth) {
+    return <div>
+      <Navigate to={"/"} />
+      </div>;
+  }
 
   if (blogs.length === 0) {
-    return <div>Loading...</div>; // Display loading state while fetching data
+    return <div className='w-[90%] mx-auto text-red-600 text-4xl'>No any Blog Post Yet</div>;
   }
 
   return (
@@ -50,7 +67,7 @@ const MyBlog = () => {
               <div className="text-gray-700">{blog.paraOneDescription}</div>
             </div>
 
-            {/* Secondary Images and Paragraphs */}
+            {/* Secondary Images and Paragraphs one*/}
             <div className="my-6">
               {blog.secondaryImageOne && <img src={blog.secondaryImageOne.url} alt="Secondary One" className="w-full h-auto mb-4 rounded-lg" />}
               <div className="text-xl font-semibold mb-2">{blog.paraTwoTitle}</div>
@@ -58,6 +75,7 @@ const MyBlog = () => {
               <div className="text-gray-700">{blog.paraTwoDescription}</div>
             </div>
 
+           {/* Secondary Images and Paragraphs two*/}
             <div className="my-6">
               {blog.secondaryImageTwo && <img src={blog.secondaryImageTwo.url} alt="Secondary Two" className="w-full h-auto mb-4 rounded-lg" />}
               <div className="text-xl font-semibold mb-2">{blog.paraThreeTitle}</div>
@@ -67,6 +85,7 @@ const MyBlog = () => {
           </div>
         ))}
       </div>
+      <Toaster/>
     </div>
   );
 };

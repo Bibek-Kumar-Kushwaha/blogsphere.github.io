@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { FaBars } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import Logo from '../../assets/BlogSphere.jpeg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,Navigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { AppContext } from '../../Context/ModeContext.jsx';
@@ -10,7 +10,6 @@ import { AppContext } from '../../Context/ModeContext.jsx';
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { isAuth, setIsAuth } = useContext(AppContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -38,12 +37,11 @@ const Navbar = () => {
       setIsAuth(false);
 
       toast.success(response?.data?.message);
-      navigate("/"); // Navigate immediately to home
     } catch (error) {
       toast.error(error.response?.data?.message || 'Logout failed!');
     }
   };
-
+   
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
