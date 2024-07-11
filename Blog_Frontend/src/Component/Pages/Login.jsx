@@ -44,10 +44,13 @@ const Login = () => {
       
       // Set token as a cookie
       cookies.set('token', token, {
-        path: '/', // This makes the cookie available throughout the whole website
-        maxAge: 7 * 24 * 60 * 60, // 7 days expiry in seconds
-        secure: process.env.NODE_ENV === 'production', // Secure cookie in production
-        sameSite: 'strict' // Strict same-site policy
+          httpOnly: true,
+          secure: true,
+          path: '/',
+          expires: new Date(new Date().getTime()+31557600000),
+          maxAge,
+          sameSite: 'none', 
+          domain: 'blogsphere-github-io-1.onrender.com' 
       });
 
       setInputValues({
