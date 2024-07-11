@@ -102,8 +102,17 @@ const loginController = async (req, res) => {
 
         // Set the cookie with the token and configure it to last a long time
         const maxAge = (process.env.EXPIRE_DAY || 1) * 24 * 60 * 60 * 1000; // convert days to milliseconds
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Secure flag for production only
+            maxAge,
+            sameSite: 'Lax', // Adjust as necessary
+            domain: process.env.NODE_ENV === 'production' ? 'blogsphere-github-io-1.onrender.com' : 'localhost' // Adjust domain
+        };
+
         return res
-            .cookie("token", token, { httpOnly: true, secure: true, maxAge })
+            .cookie("token", token, cookieOptions)
             .status(200)
             .send({ success: true, message: 'Login successful', user, token });
     } catch (error) {

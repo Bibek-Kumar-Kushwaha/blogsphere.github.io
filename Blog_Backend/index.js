@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet'
+import helmet from 'helmet';
 import dotenv from 'dotenv';
 import connectDB from './Config/connectDB.js';
 import cookieParser from 'cookie-parser';
@@ -15,18 +15,15 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: "https://blogsphere-github-io-1.onrender.com", // Allow requests from your React frontend
+    origin: process.env.NODE_ENV === 'production' ? "https://blogsphere-github-io-1.onrender.com" : "http://localhost:3000",
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
-app.options("",cors({
-    origin: "https://blogsphere-github-io-1.onrender.com", // Allow requests from your React frontend
-    methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-}))
+
 app.use(express.json()); // Middleware to parse JSON requests
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
 // Routes
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/blog', blogRouter);
