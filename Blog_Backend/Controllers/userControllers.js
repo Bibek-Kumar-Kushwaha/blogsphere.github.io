@@ -106,7 +106,7 @@ const loginController = async (req, res) => {
             httpOnly: true,
             secure: true,
             path: '/',
-            expires: new Date(new Date().getTime()+31557600000),
+            expires: new Date(Date.now() + maxAge),
             maxAge,
             sameSite: 'none', 
             domain: 'blogsphere-github-io-1.onrender.com' 
