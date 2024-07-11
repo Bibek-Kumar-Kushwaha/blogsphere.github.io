@@ -26,6 +26,7 @@ app.options("",cors({
 }))
 app.use(express.json()); // Middleware to parse JSON requests
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/blog', blogRouter);
