@@ -19,6 +19,11 @@ app.use(cors({
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
+app.options("",cors({
+    origin: "https://blogsphere-github-io-zqmc.vercel.app", // Allow requests from your React frontend
+    methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+}))
 app.use(express.json()); // Middleware to parse JSON requests
 app.use(cookieParser());
 // Routes
