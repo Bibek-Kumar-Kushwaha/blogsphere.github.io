@@ -15,12 +15,12 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: "https://blogsphere-github-io-zqmc.vercel.app", // Allow requests from your React frontend
+    origin: "https://blogsphere-github-io-1.onrender.com", // Allow requests from your React frontend
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 app.options("",cors({
-    origin: "https://blogsphere-github-io-zqmc.vercel.app", // Allow requests from your React frontend
+    origin: "https://blogsphere-github-io-1.onrender.com", // Allow requests from your React frontend
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }))
