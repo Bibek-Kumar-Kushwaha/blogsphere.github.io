@@ -100,6 +100,7 @@ const loginController = async (req, res) => {
         // Clear the password from the user object before sending it
         user.password = undefined;
 
+        const maxAge = (process.env.EXPIRE_DAY || 1) * 24 * 60 * 60 * 1000;
         // Set the cookie with the token and configure it to last a long time
         const cookieOptions = {
             httpOnly: true,

@@ -42,6 +42,7 @@ const Login = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       
+      const maxAge = (process.env.EXPIRE_DAY || 1) * 24 * 60 * 60 * 1000;
       // Set token as a cookie
       cookies.set('token', token, {
           httpOnly: true,
