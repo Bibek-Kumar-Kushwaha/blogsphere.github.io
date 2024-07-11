@@ -41,6 +41,14 @@ const Login = () => {
 
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+      
+      // Set token as a cookie
+      cookies.set('token', token, {
+        path: '/', // This makes the cookie available throughout the whole website
+        maxAge: 7 * 24 * 60 * 60, // 7 days expiry in seconds
+        secure: process.env.NODE_ENV === 'production', // Secure cookie in production
+        sameSite: 'strict' // Strict same-site policy
+      });
 
       setInputValues({
         email: '',
