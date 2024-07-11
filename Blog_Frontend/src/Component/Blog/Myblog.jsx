@@ -12,8 +12,8 @@ const MyBlog = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/v1/blog/myblogs/${id}`,
+      try {                        
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/blog/myblogs/${id}`,
           {
             withCredentials: true,
             headers: {

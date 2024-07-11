@@ -9,7 +9,7 @@ const Blogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/blog/all');
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/blog/all`);
         const publishedBlogs = response.data.blogs.filter(blog => blog.published); // Filter published blogs
         setBlogs(publishedBlogs);
       } catch (error) {

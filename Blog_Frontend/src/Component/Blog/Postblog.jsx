@@ -80,7 +80,7 @@ const PostBlog = () => {
       }
 
       // Make POST request to server
-      const response = await axios.post('http://localhost:3000/api/v1/blog/create', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/blog/create`, formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',

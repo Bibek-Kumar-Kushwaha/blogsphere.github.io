@@ -12,7 +12,7 @@ const Dashboard = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/alluser`,
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/alluser`,
           {
             withCredentials: true,
             headers: {

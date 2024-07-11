@@ -10,7 +10,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/user/myprofile', {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/myprofile`, {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",

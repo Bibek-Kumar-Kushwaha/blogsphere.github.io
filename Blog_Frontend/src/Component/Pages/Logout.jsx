@@ -9,7 +9,7 @@ const Logout = () => {
   const LogoutUser = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/logout`,
+        `${import.meta.env.VITE_BASE_URL}/user/logout`,
         {
           withCredentials: true,
           headers: {

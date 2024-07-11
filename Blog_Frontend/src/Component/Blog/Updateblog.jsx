@@ -4,6 +4,7 @@ import { AppContext } from '../../Context/ModeContext';
 import { Navigate } from 'react-router-dom';
 
 const UpdateBlog = () => { 
+  const { id } = useParams();
   const { isAuth } = useContext(AppContext);
   const [inputValues, setInputValues] = useState({
     title: '',
@@ -80,7 +81,7 @@ const UpdateBlog = () => {
       }
 
       // Make PUT request to server
-      const response = await axios.put(`http://localhost:3000/api/v1/blog/update/668abe5612b57fa55954739e`, formData, {
+      const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/blog/update/${id}`, formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',

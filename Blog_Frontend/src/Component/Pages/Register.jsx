@@ -50,7 +50,7 @@ const Register = () => {
       }
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/register`,
+        `${import.meta.env.VITE_BASE_URL}/user/register`,
         formData,
         {
           withCredentials: true,

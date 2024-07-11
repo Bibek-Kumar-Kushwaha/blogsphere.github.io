@@ -6,7 +6,7 @@ const Authors = () => {
 
   const fetchAuthors = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/user/authors');
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/user/authors`);
       setAuthors(response.data.data);
     } catch (error) {
       console.error('Error fetching authors:', error);
