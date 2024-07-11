@@ -1,11 +1,13 @@
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../Context/ModeContext'; 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const UpdateBlog = () => { 
   const { id } = useParams();
   const { isAuth } = useContext(AppContext);
+  const [blog, setBlog] = useState(null);
   const [inputValues, setInputValues] = useState({
     title: '',
     paraOneIntro: '',
@@ -54,33 +56,15 @@ const UpdateBlog = () => {
     setError('');
 
     try {
-      // Create FormData object
       const formData = new FormData();
-      if (inputValues.title) formData.append('title', inputValues.title);
-      if (inputValues.paraOneIntro) formData.append('paraOneIntro', inputValues.paraOneIntro);
-      if (inputValues.paraOneTitle) formData.append('paraOneTitle', inputValues.paraOneTitle);
-      if (inputValues.paraOneDescription) formData.append('paraOneDescription', inputValues.paraOneDescription);
-      if (inputValues.paraTwoIntro) formData.append('paraTwoIntro', inputValues.paraTwoIntro);
-      if (inputValues.paraTwoTitle) formData.append('paraTwoTitle', inputValues.paraTwoTitle);
-      if (inputValues.paraTwoDescription) formData.append('paraTwoDescription', inputValues.paraTwoDescription);
-      if (inputValues.paraThreeIntro) formData.append('paraThreeIntro', inputValues.paraThreeIntro);
-      if (inputValues.paraThreeTitle) formData.append('paraThreeTitle', inputValues.paraThreeTitle);
-      if (inputValues.paraThreeDescription) formData.append('paraThreeDescription', inputValues.paraThreeDescription);
-      if (inputValues.category) formData.append('category', inputValues.category);
-      formData.append('published', inputValues.published);
+      Object.keys(inputValues).forEach((key) => {
+        formData.append(key, inputValues[key]);
+      });
 
-      // Append images if they exist
-      if (mainImage) {
-        formData.append('mainImage', mainImage);
-      }
-      if (secondaryImageOne) {
-        formData.append('secondaryImageOne', secondaryImageOne);
-      }
-      if (secondaryImageTwo) {
-        formData.append('secondaryImageTwo', secondaryImageTwo);
-      }
+      if (mainImage) formData.append('mainImage', mainImage);
+      if (secondaryImageOne) formData.append('secondaryImageOne', secondaryImageOne);
+      if (secondaryImageTwo) formData.append('secondaryImageTwo', secondaryImageTwo);
 
-      // Make PUT request to server
       const response = await axios.put(`${import.meta.env.VITE_BASE_URL}/blog/update/${id}`, formData, {
         withCredentials: true,
         headers: {
@@ -89,7 +73,7 @@ const UpdateBlog = () => {
       });
 
       console.log('Blog updated successfully:', response.data);
-      // Reset form state after successful submission
+
       setInputValues({
         title: '',
         paraOneIntro: '',
@@ -115,10 +99,35 @@ const UpdateBlog = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/blog/${id}`);
+        setBlog(response.data.blog);
+        setInputValues({
+          title: response.data.blog.title || '',
+          paraOneIntro: response.data.blog.paraOneIntro || '',
+          paraOneTitle: response.data.blog.paraOneTitle || '',
+          paraOneDescription: response.data.blog.paraOneDescription || '',
+          paraTwoIntro: response.data.blog.paraTwoIntro || '',
+          paraTwoTitle: response.data.blog.paraTwoTitle || '',
+          paraTwoDescription: response.data.blog.paraTwoDescription || '',
+          paraThreeIntro: response.data.blog.paraThreeIntro || '',
+          paraThreeTitle: response.data.blog.paraThreeTitle || '',
+          paraThreeDescription: response.data.blog.paraThreeDescription || '',
+          category: response.data.blog.category || '',
+          published: response.data.blog.published || false,
+        });
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+        toast.error(error.response?.data?.message);
+      }
+    };
+    fetchBlog();
+  }, [id]);
+
   if (!isAuth) {
-    return <div>
-      <Navigate to={"/"} />
-      </div>;
+    return <Navigate to="/" />;
   }
 
   return (
@@ -271,41 +280,38 @@ const UpdateBlog = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="mainImage" className="block text-sm font-bold ml-2 text-[#272343]">
-              Main Image (Image For Paragraph One)
+              Main Image
             </label>
             <input
               type="file"
               id="mainImage"
               name="mainImage"
-              className="file-input w-full"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#272343]"
               onChange={handleFileChange}
-              accept="image/*"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="secondaryImageOne" className="block text-sm font-bold ml-2 text-[#272343]">
-              Secondary Image One (Image For Paragraph Two)
+              Secondary Image One
             </label>
             <input
               type="file"
               id="secondaryImageOne"
               name="secondaryImageOne"
-              className="file-input w-full"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#272343]"
               onChange={handleFileChange}
-              accept="image/*"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="secondaryImageTwo" className="block text-sm font-bold ml-2 text-[#272343]">
-              Secondary Image Two (Image For Paragraph Three)
+              Secondary Image Two
             </label>
             <input
               type="file"
               id="secondaryImageTwo"
               name="secondaryImageTwo"
-              className="file-input w-full"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#272343]"
               onChange={handleFileChange}
-              accept="image/*"
             />
           </div>
           <div className="mb-4">
@@ -317,22 +323,24 @@ const UpdateBlog = () => {
               id="published"
               name="published"
               checked={inputValues.published}
-              className="w-7 h-7 ml-2"
+              className="w-4 h-4 text-[#272343] border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#272343]"
               onChange={(e) => setInputValues({ ...inputValues, published: e.target.checked })}
             />
           </div>
-          {/* Error message */}
-          {error && <div className="mt-4 text-red-600">{error}</div>}
-          <button
-            type="submit"
-            className={`bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md transition-colors duration-300 ${loading ? 'cursor-not-allowed' : 'hover:bg-[#272343] hover:text-[#F3FBFB]'
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className={`shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300 ${
+                loading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
-            disabled={loading}
-            aria-label="Update_Blog"
-          >
-            {loading ? 'Updating...' : 'Update Blog'}
-          </button>
+              disabled={loading}
+            >
+              {loading ? 'Updating...' : 'Update Blog'}
+            </button>
+          </div>
         </form>
+        <Toaster />
       </div>
     </div>
   );

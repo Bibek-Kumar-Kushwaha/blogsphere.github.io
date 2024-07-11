@@ -55,25 +55,25 @@ const Sidebar = () => {
               </Link>
             )}
           </li>
-          <li className="flex justify-center">
+          {/* <li className="flex justify-center">
             {user && (
               <Link to={`/update/${user._id}`} className={buttonClass}>
                 Updated
               </Link>
             )}
-          </li>
+          </li> */}
           <li className="flex justify-center">
             <Link to={`/postblog`} className={buttonClass}>
               Create
             </Link>
           </li>
-          <li className="flex justify-center">
+          {/* <li className="flex justify-center">
             {user && (
               <Link to={`/delete/${user._id}`} className={buttonClass}>
                 Deleted
               </Link>
             )}
-          </li>
+          </li> */}
         </ul>
       </nav>
       <Toaster />

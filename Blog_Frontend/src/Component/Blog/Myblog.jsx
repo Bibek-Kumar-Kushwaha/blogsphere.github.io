@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { AppContext } from '../../Context/ModeContext'; 
-import { Navigate } from 'react-router-dom';
+import { AppContext } from '../../Context/ModeContext';
+import { Navigate, Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
 const MyBlog = () => {
@@ -12,16 +12,14 @@ const MyBlog = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      try {                        
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/blog/myblogs/${id}`,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setBlogs(response.data.blogs); 
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/blog/myblogs/${id}`, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setBlogs(response.data.blogs);
       } catch (error) {
         toast.error(error.response?.data?.message);
         console.error('Error fetching blogs:', error);
@@ -30,18 +28,36 @@ const MyBlog = () => {
     fetchBlogs();
   }, [id]);
 
+  const handleDelete = async (blogId) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/blog/delete/${blogId}`, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      toast('Deleted');
+      setBlogs(blogs.filter(blog => blog._id !== blogId));
+    } catch (error) {
+      console.error('Cannot delete:', error);
+      toast.error(error.response?.data?.message);
+    }
+  };
+
   if (!isAuth) {
-    return <div>
-      <Navigate to={"/"} />
-      </div>;
+    return (
+      <div>
+        <Navigate to={"/"} />
+      </div>
+    );
   }
 
   if (blogs.length === 0) {
-    return <div className='w-[90%] mx-auto text-red-600 text-4xl'>No any Blog Post Yet</div>;
+    return <div className='w-[90%] mx-auto text-red-600 text-4xl'>No Blog Posts Yet</div>;
   }
 
   return (
-    <div className="w-full mt-4 bg-[#F3FBFB] text-[#272343]">
+    <div className="w-full bg-[#F3FBFB] text-[#272343] p-3">
       <div className="w-[90%] mx-auto">
         {blogs.map(blog => (
           <div key={blog._id} className="mb-8">
@@ -67,7 +83,7 @@ const MyBlog = () => {
               <div className="text-gray-700">{blog.paraOneDescription}</div>
             </div>
 
-            {/* Secondary Images and Paragraphs one*/}
+            {/* Secondary Images and Paragraphs one */}
             <div className="my-6">
               {blog.secondaryImageOne && <img src={blog.secondaryImageOne.url} alt="Secondary One" className="w-full h-auto mb-4 rounded-lg" />}
               <div className="text-xl font-semibold mb-2">{blog.paraTwoTitle}</div>
@@ -75,17 +91,30 @@ const MyBlog = () => {
               <div className="text-gray-700">{blog.paraTwoDescription}</div>
             </div>
 
-           {/* Secondary Images and Paragraphs two*/}
+            {/* Secondary Images and Paragraphs two */}
             <div className="my-6">
               {blog.secondaryImageTwo && <img src={blog.secondaryImageTwo.url} alt="Secondary Two" className="w-full h-auto mb-4 rounded-lg" />}
               <div className="text-xl font-semibold mb-2">{blog.paraThreeTitle}</div>
               <div className="text-gray-700 mb-2">{blog.paraThreeIntro}</div>
               <div className="text-gray-700">{blog.paraThreeDescription}</div>
             </div>
+
+            <button
+              onClick={() => handleDelete(blog._id)}
+              className="shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300"
+            >
+              Delete Me
+            </button>
+            <Link
+             to={`/update/${blog._id}`}
+              className="shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300 mx-3"
+            >
+              Update Me
+            </Link>
           </div>
         ))}
       </div>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };
