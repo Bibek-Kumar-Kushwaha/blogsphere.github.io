@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: "http://localhost:5173", // Allow requests from your React frontend
+    origin: "https://blogsphere-github-io-zqmc.vercel.app", // Allow requests from your React frontend
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
