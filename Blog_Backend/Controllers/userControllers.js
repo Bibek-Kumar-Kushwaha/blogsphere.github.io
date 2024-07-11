@@ -32,8 +32,14 @@ const registerController = async (req, res) => {
 
         // Handle avatar upload if file is present
         let avatar = {};
-        if (req.file) {
-            const result = await uploadImageOnCloudinary(req.file.path, 'avatars');
+        if (req.file && req.file.avatar && req.file.avatar) {
+            return res.status(400).send({ success: false, message: 'Avatar is required' });
+        }
+
+        // Handle avatar upload if file is present
+        
+        if (req.files && req.files.avatar && req.files.avatar[0]) {
+            const result = await uploadImageOnCloudinary(req.files.avatar[0].path, 'avatars');
             avatar = {
                 public_id: result.public_id,
                 url: result.secure_url
