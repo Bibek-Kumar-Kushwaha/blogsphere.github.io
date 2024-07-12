@@ -75,7 +75,6 @@ const registerController = async (req, res) => {
 };
 
 //login
-
 const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -95,21 +94,24 @@ const loginController = async (req, res) => {
             return res.status(400).send({ success: false, message: "Your credentials do not match" });
         }
 
+        // Log the value of JWT_EXPIRES
+        console.log('JWT_EXPIRES:', process.env.JWT_EXPIRES);
+
         // JWT token generation
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: `${process.env.JWT_EXPIRES}d` });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
 
         // Clear the password from the user object before sending it
         user.password = undefined;
 
-        const maxAge = (process.env.JWT_EXPIRES || 1) * 24 * 60 * 60 * 1000;
+        const maxAge = (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000;
         // Set the cookie with the token and configure it to last a long time
         const cookieOptions = {
-            httpOnly: false,
+            httpOnly: true,
             secure: process.env.NODE_ENV === 'production', // Ensure secure is true only in production
             path: '/',
             expires: new Date(Date.now() + maxAge),
             maxAge,
-            sameSite: 'none', 
+            sameSite: 'none',
             domain: process.env.NODE_ENV === 'production' ? 'blogsphere-github-io-1.onrender.com' : undefined // Set domain only in production
         };
 
@@ -118,8 +120,8 @@ const loginController = async (req, res) => {
             .status(200)
             .send({ success: true, message: 'Login successful', user, token });
     } catch (error) {
-        console.error('Error during user login:', error);
-        return res.status(500).send({ success: false, message: 'Internal Server Error' });
+        console.error('Error during user login:', error); // Log the error details
+        return res.status(500).send({ success: false, message: 'Internal Server Error', error: error.message });
     }
 };
 
