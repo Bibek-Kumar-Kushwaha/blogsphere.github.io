@@ -19,7 +19,6 @@ app.use(cors({
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
-
 app.use(express.json()); // Middleware to parse JSON requests
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

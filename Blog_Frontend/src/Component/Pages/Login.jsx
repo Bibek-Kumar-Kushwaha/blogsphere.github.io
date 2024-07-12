@@ -4,7 +4,6 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { AppContext } from "../../Context/ModeContext";
 
-
 const Login = () => {
   const { setIsAuth, isAuth } = useContext(AppContext);
   const [inputValues, setInputValues] = useState({
@@ -21,7 +20,6 @@ const Login = () => {
     setInputValues((values) => ({ ...values, [name]: value }));
   };
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -42,18 +40,6 @@ const Login = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
-      // const maxAge = (process.env.EXPIRE_DAY || 1) * 24 * 60 * 60 * 1000;
-      // // Set token as a cookie
-      // cookies.set('token', token, {
-      //     httpOnly: true,
-      //     secure: true,
-      //     path: '/',
-      //     expires: new Date(new Date().getTime()+31557600000),
-      //     maxAge,
-      //     sameSite: 'none', 
-      //     domain: 'blogsphere-github-io-1.onrender.com' 
-      // });
-
       setInputValues({
         email: '',
         password: '',
@@ -62,7 +48,6 @@ const Login = () => {
       toast.success(response?.data?.message);
       setIsAuth(true);
       console.log('Login successful');
-
     } catch (error) {
       setError('Login failed. Please try again.');
       toast.error(error.response?.data?.message);
@@ -75,18 +60,15 @@ const Login = () => {
     setLoading(false);
   };
 
-  // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
 
   return (
     <div className="flex h-screen items-center justify-center bg-[#F3FBFB] font-semibold">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit}>
           <h3 className="font-bold text-lg text-center text-[#272343]">Login</h3>
-          {/* Email */}
           <div className="mt-4 space-y-2">
             <label htmlFor="email" className="block text-[#272343]">Email</label>
             <input
@@ -101,7 +83,6 @@ const Login = () => {
               required
             />
           </div>
-          {/* Password */}
           <div className="mt-4 space-y-2 relative">
             <label htmlFor="password" className="block text-[#272343]">Password</label>
             <input
@@ -124,13 +105,11 @@ const Login = () => {
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
-          {/* Error Message */}
           {error && (
             <div className="mt-4 text-red-600">
               {error}
             </div>
           )}
-          {/* Button */}
           <div className="flex justify-around mt-6">
             <button
               type="submit"
