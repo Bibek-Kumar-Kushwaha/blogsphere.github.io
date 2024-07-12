@@ -106,7 +106,7 @@ const loginController = async (req, res) => {
         const maxAge = (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000;
         // Set the cookie with the token and configure it to last a long time
         const cookieOptions = {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production', // Ensure secure is true only in production
             path: '/',
             expires: new Date(Date.now() + maxAge),
