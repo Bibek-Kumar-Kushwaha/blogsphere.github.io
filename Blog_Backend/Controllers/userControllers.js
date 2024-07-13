@@ -94,9 +94,6 @@ const loginController = async (req, res) => {
             return res.status(400).send({ success: false, message: "Your credentials do not match" });
         }
 
-        // Log the value of JWT_EXPIRES
-        console.log('JWT_EXPIRES:', process.env.JWT_EXPIRES);
-
         // JWT token generation
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
 
@@ -107,12 +104,12 @@ const loginController = async (req, res) => {
         // Set the cookie with the token and configure it to last a long time
         const cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Ensure secure is true only in production
+            secure: false,
             path: '/',
             expires: new Date(Date.now() + maxAge),
             maxAge,
-            sameSite: 'none',
-            domain: process.env.NODE_ENV === 'production' ? '.blogsphere-github-io-1.onrender.com' : undefined // Set domain only in production
+            sameSite: 'lax',
+            domain:'.blogsphere-github-io-1.onrender.com' // Set domain only in production
         };
 
         return res
