@@ -8,11 +8,168 @@ services:
 routes:
   - src: /
     dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
     methods:
       - GET
       - HEAD
+
+  - src: /register
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /login
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /logout
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /myprofile
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /authors
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /about
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /contact
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /services
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /author/dashboard
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /blogs
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /admin/dashboard
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /postblog
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /sidebar/.*
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /myblog/.*
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /alluser
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+      
+  - src: /update/.*
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /blogs/singleblog/.*
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /footer
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
+  - src: /delete/.*
+    dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
+    methods:
+      - GET
+      - HEAD
+
   - src: /.*
     dest: /index.html
+    headers:
+      cacheControl: max-age=0, stale-while-revalidate=1
     methods:
       - GET
       - HEAD
