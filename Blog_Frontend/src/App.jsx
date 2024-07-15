@@ -24,7 +24,7 @@ import Alluser from './Component/Admin/Alluser.jsx';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/blogsphere-github-io-1">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
