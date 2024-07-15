@@ -44,7 +44,7 @@ const App = () => {
         <Route path="/myblog/:id" element={<Myblog />} />
         <Route path="/alluser" element={<Alluser/>}/>
         <Route path="/update/:id" element={<Updateblog />} />
-        <Route path="blogs/singleblog/:id" element={<Singleblog/>}/>
+        <Route path="/blogs/singleblog/:id" element={<Singleblog/>}/>
         <Route path="/footer" element={<Footer />} />
         <Route path="/delete/:id" element={<DeleteBlog />} />
         <Route path="*" element={<Nopage />} />

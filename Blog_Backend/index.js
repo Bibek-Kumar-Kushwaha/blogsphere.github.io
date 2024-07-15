@@ -15,10 +15,10 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-    // origin:"https://blogsphere-github-io-1.onrender.com",
-    // methods: ["GET", "PUT", "DELETE", "POST", "PATCH"],
-    // credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-    // optionsSuccessStatus: 200
+    origin: "https://blogsphere-github-io-1.onrender.com",
+    methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "HEAD"],
+    credentials: true, 
+    optionsSuccessStatus: 200 
 }));
 app.use(express.json()); // Middleware to parse JSON requests
 app.use(cookieParser());
