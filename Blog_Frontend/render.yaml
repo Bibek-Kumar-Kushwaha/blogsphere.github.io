@@ -1,0 +1,18 @@
+# render.yaml
+
+services:
+  - name: web
+    buildCommand: npm run build
+    startCommand: npm run start
+
+routes:
+  - src: /
+    dest: /index.html
+    methods:
+      - GET
+      - HEAD
+  - src: /.*
+    dest: /index.html
+    methods:
+      - GET
+      - HEAD
