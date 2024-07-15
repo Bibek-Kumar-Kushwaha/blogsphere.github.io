@@ -104,12 +104,11 @@ const loginController = async (req, res) => {
         // Set the cookie with the token and configure it to last a long time
         const cookieOptions = {
             httpOnly: true,
-            secure: false,
+            secure: true,
             path: '/',
             expires: new Date(Date.now() + maxAge),
             maxAge,
-            SameSite: 'lax',
-            domain: '.blogsphere-github-io-1.onrender.com'
+            sameSite: 'lax',
         };
         
 
