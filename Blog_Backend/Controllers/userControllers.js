@@ -108,9 +108,10 @@ const loginController = async (req, res) => {
             path: '/',
             expires: new Date(Date.now() + maxAge),
             maxAge,
-            sameSite: 'lax',
-            domain:'.blogsphere-github-io-1.onrender.com' // Set domain only in production
+            SameSite: 'lax',
+            domain: '.blogsphere-github-io-1.onrender.com'
         };
+        
 
         return res
             .cookie("token", token, cookieOptions)
