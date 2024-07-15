@@ -18,6 +18,7 @@ app.use(cors({
     origin: "https://blogsphere-github-io-zqmc.vercel.app",
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "HEAD"],
     credentials: true, 
+    allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 200 
 }));
 app.use(express.json()); // Middleware to parse JSON requests
