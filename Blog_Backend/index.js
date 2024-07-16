@@ -16,18 +16,17 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors({
     origin: "https://blogsphere-github-io-zqmc.vercel.app",
-    methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "HEAD","OPTIONS"],
-    credentials: true, 
-    Headers: true,
-    exposedHeaders: 'Set-Cookie',
+    methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "OPTIONS"],
+    credentials: true,
     allowedHeaders: [
-        'Access-Control-Allow-Origin',
         'Content-Type',
-        'Authorization'
-      ],
-    optionsSuccessStatus: 200 
+        'Authorization',
+        'Set-Cookie'
+    ],
+    exposedHeaders: ['Set-Cookie'],
+    optionsSuccessStatus: 200
 }));
-app.use(express.json()); // Middleware to parse JSON requests
+app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
