@@ -16,9 +16,15 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 app.use(cors({
     origin: "https://blogsphere-github-io-zqmc.vercel.app",
-    methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "HEAD"],
+    methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "HEAD","OPTIONS"],
     credentials: true, 
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    Headers: true,
+    exposedHeaders: 'Set-Cookie',
+    allowedHeaders: [
+        'Access-Control-Allow-Origin',
+        'Content-Type',
+        'Authorization'
+      ],
     optionsSuccessStatus: 200 
 }));
 app.use(express.json()); // Middleware to parse JSON requests
