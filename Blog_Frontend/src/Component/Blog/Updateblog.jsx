@@ -8,6 +8,7 @@ const UpdateBlog = () => {
   const { id } = useParams();
   const { isAuth } = useContext(AppContext);
   const [blog, setBlog] = useState(null);
+  axios.defaults.withCredentials = true;
   const [inputValues, setInputValues] = useState({
     title: '',
     paraOneIntro: '',

@@ -24,7 +24,7 @@ const PostBlog = () => {
   const [secondaryImageTwo, setSecondaryImageTwo] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+  axios.defaults.withCredentials = true;
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputValues({ ...inputValues, [name]: value });

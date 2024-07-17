@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     const getAllUsers = async () => {
       try {

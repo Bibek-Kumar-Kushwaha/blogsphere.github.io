@@ -6,7 +6,8 @@ import { Navigate } from 'react-router-dom';
 const MyProfile = () => {
   const [user, setUser] = useState(null);
   const { isAuth } = useContext(AppContext);
- console.log(isAuth)
+  axios.defaults.withCredentials = true;
+ 
   useEffect(() => {
     const fetchUser = async () => {
       try {

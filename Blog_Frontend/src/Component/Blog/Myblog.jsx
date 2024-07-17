@@ -9,7 +9,7 @@ const MyBlog = () => {
   const [blogs, setBlogs] = useState([]);
   const { id } = useParams();
   const { isAuth } = useContext(AppContext);
-
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     const fetchBlogs = async () => {
       try {

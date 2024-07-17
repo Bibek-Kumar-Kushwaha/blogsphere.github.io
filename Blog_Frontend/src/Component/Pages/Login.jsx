@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { AppContext } from "../../Context/ModeContext";
-
+const Navigate = useNavigate();
 const Login = () => {
   const { setIsAuth, isAuth } = useContext(AppContext);
   const [inputValues, setInputValues] = useState({
@@ -14,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
+  axios.defaults.withCredentials = true;
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInputValues((values) => ({ ...values, [name]: value }));
@@ -47,7 +47,7 @@ const Login = () => {
 
       toast.success(response?.data?.message);
       setIsAuth(true);
-      console.log('Login successful');
+      Navigate('/');
     } catch (error) {
       setError('Login failed. Please try again.');
       toast.error(error.response?.data?.message);

@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { isAuth, setIsAuth } = useContext(AppContext);
   const [user, setUser] = useState(null);
-
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));

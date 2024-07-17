@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Sidebar = () => {
   const [user, setUser] = useState(null);
-
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     const fetchUser = async () => {
       try {

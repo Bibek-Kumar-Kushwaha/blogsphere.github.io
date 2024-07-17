@@ -14,7 +14,7 @@ const Register = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  axios.defaults.withCredentials = true;
   // Function to handle file selection
   const handleFileChange = (e) => {
     const file = e.target.files[0];
