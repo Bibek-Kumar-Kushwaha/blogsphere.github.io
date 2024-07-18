@@ -109,7 +109,7 @@ const loginController = async (req, res) => {
             expires: new Date(Date.now() + maxAge),
             maxAge,
             sameSite: 'Strict', // Helps prevent CSRF attacks
-            domain: 'blogsphere-github-io-zqmc.vercel.app'
+            // domain: 'blogsphere-github-io-zqmc.vercel.app'
         };
         
 
