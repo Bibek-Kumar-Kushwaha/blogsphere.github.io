@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import axios from 'axios';
-import { AppContext } from './AppContext';
-
+import { AppContext } from "../../Context/ModeContext";
 const Useauth = () => {
   const { setIsAuth, setUser } = useContext(AppContext);
 
