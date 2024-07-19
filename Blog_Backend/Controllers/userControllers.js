@@ -74,7 +74,7 @@ const registerController = async (req, res) => {
     }
 };
 
-//login
+//Login
 const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -82,44 +82,99 @@ const loginController = async (req, res) => {
             return res.status(400).send({ success: false, message: "Please provide all fields" });
         }
 
-        // Check if user exists
         const user = await userModel.findOne({ email });
         if (!user) {
             return res.status(400).send({ success: false, message: "You haven't registered yet!" });
         }
 
-        // Check if the password matches
         const isMatchPassword = await matchPassword(password, user.password);
         if (!isMatchPassword) {
             return res.status(400).send({ success: false, message: "Your credentials do not match" });
         }
 
-        // JWT token generation
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRES });
 
-        // Clear the password from the user object before sending it
+        user.refreshToken = refreshToken;
+        await user.save();
+
         user.password = undefined;
 
         const maxAge = (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000;
-        // Set the cookie with the token and configure it to last a long time
         const cookieOptions = {
-            httpOnly: true, // Accessible only by the web server
-            secure: true, // Send only over HTTPS
-            path: '/', // Ensure cookie is available throughout the site
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
             expires: new Date(Date.now() + maxAge),
-            maxAge,
-            sameSite: 'Strict', // Helps prevent CSRF attacks
-            // domain: 'blogsphere-github-io-zqmc.vercel.app'
+            sameSite: 'None',
+            domain: '.onrender.com'
         };
-        
 
-        return res
-            .cookie("token", token, cookieOptions)
-            .status(200)
-            .send({ success: true, message: 'Login successful', user, token });
+        const refreshTokenOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
+            sameSite: 'None',
+            domain: '.onrender.com'
+        };
+
+        res.cookie("token", token, cookieOptions);
+        res.cookie("refreshToken", refreshToken, refreshTokenOptions);
+
+        return res.status(200).send({ success: true, message: 'Login successful', user, token });
     } catch (error) {
-        console.error('Error during user login:', error); // Log the error details
+        console.error('Error during user login:', error);
         return res.status(500).send({ success: false, message: 'Internal Server Error', error: error.message });
+    }
+};
+
+//RefreshToken
+const refreshTokenController = async (req, res) => {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+        return res.status(403).send({ success: false, message: 'Refresh token not provided' });
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+        const user = await userModel.findById(decoded.id);
+
+        if (!user || user.refreshToken !== refreshToken) {
+            return res.status(403).send({ success: false, message: 'Invalid refresh token' });
+        }
+
+        const newToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
+        const newRefreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRES });
+
+        user.refreshToken = newRefreshToken;
+        await user.save();
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            expires: new Date(Date.now() + (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000),
+            sameSite: 'None',
+            domain: '.onrender.com'
+        };
+
+        const refreshTokenOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
+            sameSite: 'None',
+            domain: '.onrender.com'
+        };
+
+        res.cookie("token", newToken, cookieOptions);
+        res.cookie("refreshToken", newRefreshToken, refreshTokenOptions);
+
+        return res.status(200).send({ success: true, token: newToken });
+    } catch (error) {
+        return res.status(403).send({ success: false, message: 'Invalid refresh token', error: error.message });
     }
 };
 
@@ -227,4 +282,4 @@ const myProfileController = async (req, res) => {
 }
 
 
-export { registerController, loginController, logoutController, getAllUser, readersController, authorsController, myProfileController };
+export { registerController, loginController, logoutController, getAllUser, readersController, authorsController, myProfileController ,refreshTokenController};

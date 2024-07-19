@@ -21,6 +21,7 @@ import Updateblog from './Component/Blog/Updateblog.jsx';
 import DeleteBlog from './Component/Blog/DeleteBlog.jsx';
 import Singleblog from './Component/Blog/Singleblog.jsx';
 import Alluser from './Component/Admin/Alluser.jsx';
+import Useauth from './Component/Pages/Useauth.jsx';
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/update/:id" element={<Updateblog />} />
         <Route path="/blogs/singleblog/:id" element={<Singleblog/>}/>
         <Route path="/footer" element={<Footer />} />
+        <Route path="/refresh-token" element={<Useauth />} />
         <Route path="/delete/:id" element={<DeleteBlog />} />
         <Route path="*" element={<Nopage />} />
       </Routes>
