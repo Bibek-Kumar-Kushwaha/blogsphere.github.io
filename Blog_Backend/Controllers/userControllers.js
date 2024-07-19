@@ -112,7 +112,7 @@ const loginController = async (req, res) => {
 
         const refreshTokenOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
             path: '/',
             expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
             sameSite: 'None',
@@ -153,7 +153,7 @@ const refreshTokenController = async (req, res) => {
 
         const cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
             path: '/',
             expires: new Date(Date.now() + (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000),
             sameSite: 'None',
@@ -162,7 +162,7 @@ const refreshTokenController = async (req, res) => {
 
         const refreshTokenOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
             path: '/',
             expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
             sameSite: 'None',
