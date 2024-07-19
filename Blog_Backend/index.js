@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: ['https://blogsphere-github-io-zqmc.vercel.app'],
-    methods: ['GET', 'PUT', 'DELETE', 'POST', 'PATCH', 'OPTIONS'],
+    origin: "https://blogsphere-github-io.onrender.com",
+    methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "OPTIONS"],
     credentials: true,
     allowedHeaders: [
         'Content-Type',
@@ -26,8 +26,9 @@ app.use(cors({
     exposedHeaders: ['Set-Cookie'],
     optionsSuccessStatus: 200
 }));
-app.use(express.json());
+
 app.use(cookieParser());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes

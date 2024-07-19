@@ -37,7 +37,7 @@ const registerController = async (req, res) => {
         }
 
         // Handle avatar upload if file is present
-        
+
         if (req.files && req.files.avatar && req.files.avatar[0]) {
             const result = await uploadImageOnCloudinary(req.files.avatar[0].path, 'avatars');
             avatar = {
@@ -64,7 +64,7 @@ const registerController = async (req, res) => {
             message: "User registered successfully",
             user: newUser
         });
-        
+
     } catch (error) {
         console.error('Error during user registration:', error);
         return res.status(500).send({
@@ -103,7 +103,7 @@ const loginController = async (req, res) => {
         const maxAge = (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000;
         const cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,
             path: '/',
             expires: new Date(Date.now() + maxAge),
             sameSite: 'None',
@@ -132,7 +132,6 @@ const loginController = async (req, res) => {
 //RefreshToken
 const refreshTokenController = async (req, res) => {
     const { refreshToken } = req.cookies;
-
     if (!refreshToken) {
         return res.status(403).send({ success: false, message: 'Refresh token not provided' });
     }
@@ -153,7 +152,7 @@ const refreshTokenController = async (req, res) => {
 
         const cookieOptions = {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             path: '/',
             expires: new Date(Date.now() + (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000),
             sameSite: 'None',
@@ -162,7 +161,7 @@ const refreshTokenController = async (req, res) => {
 
         const refreshTokenOptions = {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             path: '/',
             expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
             sameSite: 'None',
@@ -172,8 +171,9 @@ const refreshTokenController = async (req, res) => {
         res.cookie("token", newToken, cookieOptions);
         res.cookie("refreshToken", newRefreshToken, refreshTokenOptions);
 
-        return res.status(200).send({ success: true, token: newToken });
+        return res.status(200).send({ success: true, message: 'Refresh token successful', token: newToken });
     } catch (error) {
+        console.error('Error during refresh token:', error);
         return res.status(403).send({ success: false, message: 'Invalid refresh token', error: error.message });
     }
 };
@@ -249,7 +249,7 @@ const authorsController = async (req, res) => {
                 .status(404)
                 .send({ success: false, message: "No user Found" });
         }
-        
+
         return res
             .status(200)
             .json({ total: authors.length, success: true, data: authors });
@@ -266,11 +266,11 @@ const myProfileController = async (req, res) => {
         const user = req.user;
         if (!user) {
             return res.status(401).json({ success: false, message: 'Unauthorized' });
-          }
+        }
         const userProfile = await userModel.findById(user._id).select('-password');
         if (!userProfile) {
             return res.status(404).json({ success: false, message: 'User not found' });
-          }
+        }
         return res
             .status(200)
             .json({ success: true, data: userProfile });
@@ -282,4 +282,4 @@ const myProfileController = async (req, res) => {
 }
 
 
-export { registerController, loginController, logoutController, getAllUser, readersController, authorsController, myProfileController ,refreshTokenController};
+export { registerController, loginController, logoutController, getAllUser, readersController, authorsController, myProfileController, refreshTokenController };
