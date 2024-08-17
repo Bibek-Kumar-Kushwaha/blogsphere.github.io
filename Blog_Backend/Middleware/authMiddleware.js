@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 import userModel from '../Models/userModels.js';
 
+// Middleware to check if the user is authorized
 const isAuthorized = async (req, res, next) => {
     try {
-        const { token } = req.cookies;
+        const token = req.cookies.token; 
         if (!token) {
             return res.status(401).send({ success: false, message: "Please login to access this resource" });
         }
@@ -29,11 +30,12 @@ const isAuthorized = async (req, res, next) => {
     }
 }
 
+// Middleware to check if the user is an Admin
 const isAdmin = async (req, res, next) => {
     try {
         const user = req.user;
         if (!user || user.role !== "Admin") {
-            return res.status(401).send({ success: false, message: "You are not authorized" });
+            return res.status(403).send({ success: false, message: "You are not authorized" });
         }
 
         next();
@@ -43,13 +45,14 @@ const isAdmin = async (req, res, next) => {
     }
 }
 
+// Middleware to check if the user is an Author
 const isAuthor = async (req, res, next) => {
     try {
-        const user = req._id;
-        console.log(user)
+        const user = req.user;
         if (!user || user.role !== "Author") {
-            return res.status(401).send({ success: false, message: "You are not authorized" });
+            return res.status(403).send({ success: false, message: "You are not authorized" });
         }
+
         next();
     } catch (error) {
         console.error('Author authorization error:', error);
@@ -57,11 +60,12 @@ const isAuthor = async (req, res, next) => {
     }
 }
 
+// Middleware to check if the user has access to a specific resource
 const checkUserAccess = (req, res, next) => {
     if (req.params.id !== req.user.id.toString()) {
-      return res.status(403).send({ success: false, message: "You are not authorized to access this resource" });
+        return res.status(403).send({ success: false, message: "You are not authorized to access this resource" });
     }
     next();
-  };
+};
 
 export { isAuthorized, isAdmin, isAuthor, checkUserAccess };

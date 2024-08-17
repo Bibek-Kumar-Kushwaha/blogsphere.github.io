@@ -1,9 +1,7 @@
-import { useContext } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
-import { AppContext } from "../../Context/ModeContext";
-const Useauth = () => {
-  const { setIsAuth, setUser } = useContext(AppContext);
 
+const useAuth = () => {
   const refreshAccessToken = async () => {
     try {
       const response = await axios.post(
@@ -16,14 +14,22 @@ const Useauth = () => {
 
       const { token } = response.data;
       localStorage.setItem('token', token);
-      setIsAuth(true);
     } catch (error) {
       console.error('Failed to refresh access token:', error);
-      throw error;
     }
   };
+
+  useEffect(() => {
+    // Call refreshAccessToken every minute
+    const interval = setInterval(() => {
+      refreshAccessToken();
+    }, 60 * 1000); // 60 seconds
+
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   return { refreshAccessToken };
 };
 
-export default Useauth;
+export default useAuth;

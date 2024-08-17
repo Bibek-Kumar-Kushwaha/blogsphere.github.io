@@ -15,7 +15,11 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: "https://blogsphere-github-io-zqmc.vercel.app",
+    origin: [
+        "https://blogsphere-github-io-zqmc.vercel.app",
+        "https://www.bibekkumarkushwaha.com.np",
+        "http://localhost:5173/"
+    ],
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "OPTIONS"],
     credentials: true,
     allowedHeaders: [

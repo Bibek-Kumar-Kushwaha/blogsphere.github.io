@@ -79,123 +79,129 @@ const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res.status(400).send({ success: false, message: "Please provide all fields" });
+            return res.status(400).json({ success: false, message: 'Please provide all fields' });
         }
 
         const user = await userModel.findOne({ email });
         if (!user) {
-            return res.status(400).send({ success: false, message: "You haven't registered yet!" });
+            return res.status(400).json({ success: false, message: 'User not registered' });
         }
 
         const isMatchPassword = await matchPassword(password, user.password);
         if (!isMatchPassword) {
-            return res.status(400).send({ success: false, message: "Your credentials do not match" });
+            return res.status(400).json({ success: false, message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
-        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRES });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1m' });
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
 
         user.refreshToken = refreshToken;
         await user.save();
 
-        user.password = undefined;
-
-        const maxAge = (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000;
         const cookieOptions = {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             path: '/',
-            expires: new Date(Date.now() + maxAge),
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration
             sameSite: 'None',
-            domain: '.onrender.com'
         };
 
-        const refreshTokenOptions = {
-            httpOnly: true,
-            secure: true,
-            path: '/',
-            expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
-            sameSite: 'None',
-            domain: '.onrender.com'
-        };
+        res.cookie('token', token, cookieOptions);
+        res.cookie('refreshToken', refreshToken, cookieOptions);
 
-        res.cookie("token", token, cookieOptions);
-        res.cookie("refreshToken", refreshToken, refreshTokenOptions);
-
-        return res.status(200).send({ success: true, message: 'Login successful', user, token });
+        return res.status(200).json({ success: true, message: 'Login successful', user, token, refreshToken });
     } catch (error) {
         console.error('Error during user login:', error);
-        return res.status(500).send({ success: false, message: 'Internal Server Error', error: error.message });
+        return res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });
     }
 };
+
 
 //RefreshToken
 const refreshTokenController = async (req, res) => {
-    const { refreshToken } = req.cookies;
-    if (!refreshToken) {
-        return res.status(403).send({ success: false, message: 'Refresh token not provided' });
-    }
-
     try {
-        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-        const user = await userModel.findById(decoded.id);
-
-        if (!user || user.refreshToken !== refreshToken) {
-            return res.status(403).send({ success: false, message: 'Invalid refresh token' });
+        const cookies = req.headers.cookie;
+        if (!cookies) {
+            return res.status(400).json({ message: "Couldn't find token" });
         }
 
-        const newToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
-        const newRefreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRES });
+        const prevToken = cookies.split('refreshToken=')[1];
+        if (!prevToken) {
+            return res.status(400).json({ message: "Couldn't find token" });
+        }
 
-        user.refreshToken = newRefreshToken;
-        await user.save();
+        jwt.verify(prevToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
+            if (err) {
+                console.error('Token verification error:', err);
+                return res.status(403).json({ message: 'Authentication failed' });
+            }
 
-        const cookieOptions = {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            expires: new Date(Date.now() + (parseInt(process.env.JWT_EXPIRES) || 1) * 24 * 60 * 60 * 1000),
-            sameSite: 'None',
-            domain: '.onrender.com'
-        };
+            const user = await userModel.findById(decoded.id);
+            if (!user || user.refreshToken !== prevToken) {
+                return res.status(403).json({ message: 'Invalid refresh token' });
+            }
 
-        const refreshTokenOptions = {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            expires: new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES) || 7) * 24 * 60 * 60 * 1000),
-            sameSite: 'None',
-            domain: '.onrender.com'
-        };
+            const newToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+                expiresIn: '1m', // Short expiration
+            });
+            const newRefreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, {
+                expiresIn: '7d', // Longer expiration
+            });
 
-        res.cookie("token", newToken, cookieOptions);
-        res.cookie("refreshToken", newRefreshToken, refreshTokenOptions);
+            user.refreshToken = newRefreshToken;
+            await user.save();
 
-        return res.status(200).send({ success: true, message: 'Refresh token successful', token: newToken });
+            const cookieOptions = {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                path: '/',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration
+                sameSite: 'None',
+            };
+
+
+            res.cookie('refreshToken', newRefreshToken, cookieOptions);
+            res.cookie('token', newToken, {
+                path: '/',
+                expires: new Date(Date.now() + 60 * 1000), // Access token expiration
+                httpOnly: true,
+                sameSite: 'Lax',
+            });
+
+            return res.status(200).json({ success: true, message: 'Token refreshed', token: newToken, refreshToken: newRefreshToken });
+        });
     } catch (error) {
         console.error('Error during refresh token:', error);
-        return res.status(403).send({ success: false, message: 'Invalid refresh token', error: error.message });
+        return res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 };
+
+
 
 //logout
 const logoutController = (req, res) => {
     try {
         res.cookie('token', '', {
             httpOnly: true,
-            expires: new Date(0)
+            expires: new Date(0),
+            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production'
         });
 
-        return res
-            .status(200)
-            .send({ success: true, message: "Logout successful" });
+        res.cookie('refreshToken', '', {
+            httpOnly: true,
+            expires: new Date(0),
+            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production'
+        });
+
+        return res.status(200).json({ success: true, message: 'Logout successful' });
     } catch (error) {
         console.error('Error during logout:', error);
-        return res
-            .status(500)
-            .send({ success: false, message: 'Internal Server Error' });
+        return res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 };
+
 
 //get all user as a admin
 const getAllUser = async (req, res) => {
