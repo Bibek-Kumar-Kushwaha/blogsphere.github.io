@@ -18,7 +18,7 @@ app.use(cors({
     origin: [
         "https://blogsphere-github-io-zqmc.vercel.app",
         "https://www.bibekkumarkushwaha.com.np",
-        "http://localhost:5173/"
+        "http://localhost:5173"
     ],
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "OPTIONS"],
     credentials: true,
@@ -47,12 +47,18 @@ app.get('/', (req, res) => {
 // Error Handling Middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(err.status || 500).json({
+        message: err.message || 'Something went wrong!',
+        error: process.env.NODE_ENV === 'development' ? err : {}
+    });
 });
 
 // Connect to Database
-connectDB();
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}).catch(err => {
+    console.error('Database connection error:', err);
+    process.exit(1);
 });
