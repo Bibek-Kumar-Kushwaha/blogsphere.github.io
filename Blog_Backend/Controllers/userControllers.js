@@ -142,7 +142,7 @@ const refreshTokenController = async (req, res) => {
             }
 
             const newToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-                expiresIn: '1m', // Short expiration
+                expiresIn: '1d', // Short expiration
             });
             const newRefreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, {
                 expiresIn: '7d', // Longer expiration
@@ -163,7 +163,7 @@ const refreshTokenController = async (req, res) => {
             res.cookie('refreshToken', newRefreshToken, cookieOptions);
             res.cookie('token', newToken, {
                 path: '/',
-                expires: new Date(Date.now() + 60 * 1000), // Access token expiration
+                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Access token expiration
                 httpOnly: true,
                 sameSite: 'Lax',
             });
