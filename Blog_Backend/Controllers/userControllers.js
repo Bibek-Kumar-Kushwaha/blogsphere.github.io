@@ -163,7 +163,7 @@ const refreshTokenController = async (req, res) => {
             res.cookie('refreshToken', newRefreshToken, cookieOptions);
             res.cookie('token', newToken, {
                 path: '/',
-                expires: new Date(Date.now() + 60 * 1000), // Access token expiration
+                expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Access token expiration
                 httpOnly: true,
                 sameSite: 'Lax',
             });
