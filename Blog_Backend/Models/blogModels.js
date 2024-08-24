@@ -5,7 +5,7 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: [10, "Blog Title must be contain at least 10 characters"],
-        maxLength: [40, "Blog Title cannot exceed 40 characters"],
+        // maxLength: [40, "Blog Title cannot exceed 40 characters"],
     },
     mainImage: {
         public_id: {
@@ -34,7 +34,7 @@ const blogSchema = new mongoose.Schema({
     paraOneIntro: {
         type: String,
         required: true,
-        minLength: [250, "Blog Intro must contain at least 250 characters"],
+        minLength: [50, "Blog Intro must contain at least 250 characters"],
     },
     paraOneTitle: {
         type: String,
@@ -48,7 +48,7 @@ const blogSchema = new mongoose.Schema({
     },
     paraTwoIntro: {
         type: String,
-        minLength: [150, "Blog Intro must contain at least 150 characters"],
+        minLength: [50, "Blog Intro must contain at least 150 characters"],
     },
     paraTwoDescription: {
         type: String,
@@ -59,7 +59,7 @@ const blogSchema = new mongoose.Schema({
     },
     paraThreeIntro: {
         type: String,
-        minLength: [150, "Blog Intro must contain at least 150 characters"],
+        minLength: [50, "Blog Intro must contain at least 150 characters"],
     },
     paraThreeDescription: {
         type: String,

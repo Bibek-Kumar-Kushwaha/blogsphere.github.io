@@ -41,49 +41,75 @@ const SingleBlog = () => {
     paraThreeIntro,
     paraThreeDescription,
     secondaryImageOne,
-    secondaryImageTwo
+    secondaryImageTwo,
   } = blog;
 
   return (
-    <div className="w-full mt-4 bg-[#F3FBFB] text-[#272343]">
-      <div className="w-[90%] mx-auto">
-        <div className="text-3xl font-bold mb-4">{title}</div>
+    <div className="w-full bg-background text-primary py-8">
+      <div className="w-[90%] mx-auto max-w-4xl">
+        <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 uppercase">{title}</div>
 
-        <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mb-4 font-semibold">
-          <div className="my-auto p-3">
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mb-6 font-semibold">
+          <div className="mb-4 sm:mb-0 sm:mr-4">
             <div className="text-sm text-gray-600">Published: {new Date(updatedAt).toDateString()}</div>
             <div className="text-sm text-gray-600">Category: {category}</div>
           </div>
-          <div className="my-auto text-center">
-            <div className="mb-2">
-               <img src={authorAvatar} alt="Author Avatar" className="w-16 h-16 rounded-full mx-auto" />
-            </div>
-            <div className="text-sm text-gray-800">Author: {authorName}</div>
+          <div className="text-center">
+            <img
+              src={authorAvatar}
+              alt={`Avatar of ${authorName}`}
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-2"
+            />
+            <div className="text-sm text-secondary uppercase">Author : {authorName}</div>
           </div>
         </div>
 
-        {/* Paragraph One */}
-        <div className="my-6">
-          {mainImage && <img src={mainImage.url} alt="Main" className="w-full h-auto mb-4 rounded-lg" />}
-          <div className="text-xl font-semibold mb-2">{paraOneTitle}</div>
-          <div className="text-gray-700 mb-2">{paraOneIntro}</div>
-          <div className="text-gray-700">{paraOneDescription}</div>
+        {/* Paragraph One with Image on the Right */}
+        <div className="flex flex-col sm:flex-row-reverse items-center my-8">
+          {mainImage && (
+            <img
+              src={mainImage.url}
+              alt="Paragraph One Image"
+              className="w-full sm:w-64 h-auto mb-6 sm:mb-0 sm:ml-6 rounded-lg"
+            />
+          )}
+          <div>
+            <div className="text-lg sm:text-xl font-bold mb-4">{paraOneTitle}</div>
+            <div className="text-base sm:text-lg text-black mb-2">{paraOneIntro}</div>
+            <div className="text-base sm:text-lg text-black">{paraOneDescription}</div>
+          </div>
         </div>
 
-        {/* Paragraph Two */}
-        <div className="my-6">
-          {secondaryImageOne && <img src={secondaryImageOne.url} alt="Secondary One" className="w-full h-auto mb-4 rounded-lg" />}
-          <div className="text-xl font-semibold mb-2">{paraTwoTitle}</div>
-          <div className="text-gray-700 mb-2">{paraTwoIntro}</div>
-          <div className="text-gray-700">{paraTwoDescription}</div>
+        {/* Paragraph Two with Image on the Left */}
+        <div className="flex flex-col sm:flex-row items-center my-8">
+          {secondaryImageOne && (
+            <img
+              src={secondaryImageOne.url}
+              alt="Secondary Image One"
+              className="w-full sm:w-64 h-auto mb-6 sm:mb-0 sm:mr-6 rounded-lg"
+            />
+          )}
+          <div>
+            <div className="text-lg sm:text-xl font-bold mb-4">{paraTwoTitle}</div>
+            <div className="text-base sm:text-lg text-gray-700 mb-2">{paraTwoIntro}</div>
+            <div className="text-base sm:text-lg text-gray-700">{paraTwoDescription}</div>
+          </div>
         </div>
 
-        {/* Paragraph Three */}
-        <div className="my-6">
-          {secondaryImageTwo && <img src={secondaryImageTwo.url} alt="Secondary Two" className="w-full h-auto mb-4 rounded-lg" />}
-          <div className="text-xl font-semibold mb-2">{paraThreeTitle}</div>
-          <div className="text-gray-700 mb-2">{paraThreeIntro}</div>
-          <div className="text-gray-700">{paraThreeDescription}</div>
+        {/* Paragraph Three with Image on the Right */}
+        <div className="flex flex-col sm:flex-row-reverse items-center my-8">
+          {secondaryImageTwo && (
+            <img
+              src={secondaryImageTwo.url}
+              alt="Secondary Image Two"
+              className="w-full sm:w-64 h-auto mb-6 sm:mb-0 sm:ml-6 rounded-lg"
+            />
+          )}
+          <div>
+            <div className="text-lg sm:text-xl font-bold mb-4">{paraThreeTitle}</div>
+            <div className="text-base sm:text-lg text-gray-700 mb-2">{paraThreeIntro}</div>
+            <div className="text-base sm:text-lg text-gray-700">{paraThreeDescription}</div>
+          </div>
         </div>
       </div>
       <Toaster/>
