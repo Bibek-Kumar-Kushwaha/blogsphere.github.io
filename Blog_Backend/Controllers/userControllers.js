@@ -92,8 +92,8 @@ const loginController = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1m' });
-        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' }); // Token expires in 1 day
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' }); // Refresh token expires in 7 days
 
         user.refreshToken = refreshToken;
         await user.save();
@@ -102,11 +102,14 @@ const loginController = async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             path: '/',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration set to 7 days
             sameSite: 'None',
         };
 
-        res.cookie('token', token, cookieOptions);
+        res.cookie('token', token, {
+            ...cookieOptions,
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Token expiration set to 1 day
+        });
         res.cookie('refreshToken', refreshToken, cookieOptions);
 
         return res.status(200).json({ success: true, message: 'Login successful', user, token, refreshToken });
@@ -142,10 +145,10 @@ const refreshTokenController = async (req, res) => {
             }
 
             const newToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-                expiresIn: '1d', // Short expiration
+                expiresIn: '1d', // Token expires in 1 day
             });
             const newRefreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, {
-                expiresIn: '7d', // Longer expiration
+                expiresIn: '7d', // Refresh token expires in 7 days
             });
 
             user.refreshToken = newRefreshToken;
@@ -155,15 +158,14 @@ const refreshTokenController = async (req, res) => {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 path: '/',
-                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration set to 7 days
                 sameSite: 'None',
             };
-
 
             res.cookie('refreshToken', newRefreshToken, cookieOptions);
             res.cookie('token', newToken, {
                 path: '/',
-                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Access token expiration
+                expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Token expiration set to 1 day
                 httpOnly: true,
                 sameSite: 'Lax',
             });
