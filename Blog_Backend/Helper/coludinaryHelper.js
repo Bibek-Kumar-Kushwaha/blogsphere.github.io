@@ -1,7 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 // Configure Cloudinary
@@ -11,18 +9,13 @@ cloudinary.config({
     api_secret: process.env.API_SECRET
 });
 
-const uploadImageOnCloudinary = async (filePath, folderName) => {
+// Function to upload image to Cloudinary
+const uploadImageOnCloudinary = async (buffer, folderName) => {
     try {
-        const result = await cloudinary.uploader.upload(filePath, {
-            folder: folderName
-        });
-
-        // Remove the file from local storage after successful upload
-        try {
-            fs.unlinkSync(filePath);
-        } catch (error) {
-            console.error('Error removing file:', error);
-        }
+        const result = await cloudinary.uploader.upload_stream({ folder: folderName }, (error, result) => {
+            if (error) throw error;
+            return result;
+        }).end(buffer);
 
         return result;
     } catch (error) {

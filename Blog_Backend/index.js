@@ -17,8 +17,7 @@ app.use(helmet());
 app.use(cors({
     origin: [
         "https://blogsphere-github-io-zqmc.vercel.app",
-        "https://www.bibekkumarkushwaha.com.np",
-        "http://localhost:5173"
+        "https://www.bibekkumarkushwaha.com.np"
     ],
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "OPTIONS"],
     credentials: true,
@@ -62,3 +61,5 @@ connectDB().then(() => {
     console.error('Database connection error:', err);
     process.exit(1);
 });
+
+export default app;

@@ -34,7 +34,7 @@ const createBlogController = async (req, res) => {
         }
 
         // Handle main image upload
-        const resultMainImage = await uploadImageOnCloudinary(req.files.mainImage[0].path, 'blog_images');
+        const resultMainImage = await uploadImageOnCloudinary(req.files.mainImage[0].buffer, 'blog_images');
         const mainImage = {
             public_id: resultMainImage.public_id,
             url: resultMainImage.secure_url
@@ -45,7 +45,7 @@ const createBlogController = async (req, res) => {
         let secondaryImageTwo = {};
 
         if (req.files.secondaryImageOne) {
-            const result = await uploadImageOnCloudinary(req.files.secondaryImageOne[0].path, 'blog_images');
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageOne[0].buffer, 'blog_images');
             secondaryImageOne = {
                 public_id: result.public_id,
                 url: result.secure_url
@@ -53,7 +53,7 @@ const createBlogController = async (req, res) => {
         }
 
         if (req.files.secondaryImageTwo) {
-            const result = await uploadImageOnCloudinary(req.files.secondaryImageTwo[0].path, 'blog_images');
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageTwo[0].buffer, 'blog_images');
             secondaryImageTwo = {
                 public_id: result.public_id,
                 url: result.secure_url
@@ -190,7 +190,7 @@ const updateBlogController = async (req, res) => {
         let secondaryImageTwo = {};
 
         if (req.files && req.files.mainImage) {
-            const result = await uploadImageOnCloudinary(req.files.mainImage[0].path, 'blog_images');
+            const result = await uploadImageOnCloudinary(req.files.mainImage[0].buffer, 'blog_images');
             mainImage = {
                 public_id: result.public_id,
                 url: result.secure_url
@@ -199,7 +199,7 @@ const updateBlogController = async (req, res) => {
         }
 
         if (req.files && req.files.secondaryImageOne) {
-            const result = await uploadImageOnCloudinary(req.files.secondaryImageOne[0].path, 'blog_images');
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageOne[0].buffer, 'blog_images');
             secondaryImageOne = {
                 public_id: result.public_id,
                 url: result.secure_url
@@ -208,7 +208,7 @@ const updateBlogController = async (req, res) => {
         }
 
         if (req.files && req.files.secondaryImageTwo) {
-            const result = await uploadImageOnCloudinary(req.files.secondaryImageTwo[0].path, 'blog_images');
+            const result = await uploadImageOnCloudinary(req.files.secondaryImageTwo[0].buffer, 'blog_images');
             secondaryImageTwo = {
                 public_id: result.public_id,
                 url: result.secure_url

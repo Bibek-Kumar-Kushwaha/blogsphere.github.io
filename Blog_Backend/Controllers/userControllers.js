@@ -39,7 +39,7 @@ const registerController = async (req, res) => {
         // Handle avatar upload if file is present
 
         if (req.files && req.files.avatar && req.files.avatar[0]) {
-            const result = await uploadImageOnCloudinary(req.files.avatar[0].path, 'avatars');
+            const result = await uploadImageOnCloudinary(req.files.avatar[0].buffer, 'avatars');
             avatar = {
                 public_id: result.public_id,
                 url: result.secure_url
@@ -101,7 +101,7 @@ const loginController = async (req, res) => {
         const cookieOptions = {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            path: '/',
+            buffer: '/',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration set to 7 days
             sameSite: 'None',
         };
@@ -157,14 +157,14 @@ const refreshTokenController = async (req, res) => {
             const cookieOptions = {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                path: '/',
+                buffer: '/',
                 expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Refresh token expiration set to 7 days
                 sameSite: 'None',
             };
 
             res.cookie('refreshToken', newRefreshToken, cookieOptions);
             res.cookie('token', newToken, {
-                path: '/',
+                buffer: '/',
                 expires: new Date(Date.now() + 60 * 1000), // Access token expiration
                 httpOnly: true,
                 sameSite: 'Lax',
