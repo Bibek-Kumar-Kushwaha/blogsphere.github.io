@@ -6,16 +6,27 @@ dotenv.config();
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+    api_secret: process.env.API_SECRET,
 });
 
 // Function to upload image to Cloudinary
 const uploadImageOnCloudinary = async (buffer, folderName) => {
     try {
-        const result = await cloudinary.uploader.upload_stream({ folder: folderName }, (error, result) => {
-            if (error) throw error;
-            return result;
-        }).end(buffer);
+        // Wrap the upload stream in a Promise
+        const result = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                { folder: folderName },
+                (error, result) => {
+                    if (error) {
+                        reject(error); // Reject if there's an error
+                    } else {
+                        resolve(result); // Resolve the result if successful
+                    }
+                }
+            );
+            // End the stream with the file buffer
+            uploadStream.end(buffer);
+        });
 
         return result;
     } catch (error) {
