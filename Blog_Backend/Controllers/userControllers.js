@@ -251,7 +251,7 @@ const readersController = async (req, res) => {
 const authorsController = async (req, res) => {
     try {
 
-        const authors = await userModel.find({ role: 'Author' }).select('username').select('avatar');
+        const authors = await userModel.find({ role: 'Author' }).select('username').select('avatar').select('email');
         if (!authors) {
             return res
                 .status(404)

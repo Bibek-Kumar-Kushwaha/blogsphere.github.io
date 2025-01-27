@@ -41,10 +41,10 @@ const Dashboard = () => {
     }
 
   return (
-    <div className="min-h-screen bg-[#F3FBFB] text-[#272343] p-8">
+    <div className="min-h-screen bg-background text-text p-8">
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-8">User Dashboard</h1>
-        <div className="mb-8 p-4 bg-[#BAE8E8] rounded-lg shadow-md">
+        <div className="mb-8 p-4 bg-background rounded-lg shadow-md">
           <h2 className="text-xl font-semibold">Total Users: {users.total}</h2>
         </div>
         <div>

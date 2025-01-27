@@ -35,8 +35,8 @@ const MyProfile = () => {
   }
 
   return (
-    <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">User Profile</h1>
+    <div className="bg-background min-h-screen p-6">
+      <h1 className="text-3xl font-bold mb-4 text-center text-text">User Profile</h1>
       {isAuth ? (
         user ? (
           <div className="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -47,7 +47,7 @@ const MyProfile = () => {
                 className="w-32 h-32 mx-auto rounded-full mb-4"
               />
               <h2 className="text-xl font-bold text-gray-800 uppercase">{user.username}</h2>
-              <p className="text-sm text-gray-600 lowercase">{user.email}</p>
+              <p className="text-sm text-secondary lowercase">{user.email}</p>
             </div>
             <div className="mt-4">
               <h3 className="text-lg font-semibold text-gray-700 mb-2">Profile Details</h3>
@@ -56,7 +56,7 @@ const MyProfile = () => {
             </div>
           </div>
         ) : (
-          <p className="text-center text-gray-600">Loading...</p>
+          <p className="text-center text-secondary">Loading...</p>
         )
       ) : (
         <p className="text-center text-red-500">Please log in to access this page.</p>

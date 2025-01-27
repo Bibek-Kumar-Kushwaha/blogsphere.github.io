@@ -25,10 +25,10 @@ const Sidebar = () => {
     fetchUser();
   }, []);
 
-  const buttonClass = "shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md text-base font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300 w-full text-center";
+  const buttonClass = "shadow-md shadow-slate-800 bg-button-bg text-text px-4 py-2 rounded-md text-base font-semibold hover:bg-button-hover-bg hover:text-text transition-colors duration-300 w-full text-center";
 
   return (
-    <div className="w-full h-screen bg-[#F3FBFB] p-4 flex flex-col items-center">
+    <div className="w-full h-screen bg-background p-4 flex flex-col items-center">
       {user && (
         <div className="text-center my-4">
           <img 
@@ -37,8 +37,8 @@ const Sidebar = () => {
             className="w-32 h-32 rounded-full mx-auto" 
             style={{ backgroundColor: '#BAE8E8' }}
           />
-          <h2 className="mt-2 text-xl font-semibold text-[#272343]">{user.username}</h2>
-          <p className="text-sm text-gray-600">{user.email}</p>
+          <h2 className="mt-2 text-xl font-semibold text-text">{user.username}</h2>
+          <p className="text-sm text-secondary">{user.email}</p>
         </div>
       )}
       <nav className="w-full mt-8">

@@ -85,14 +85,14 @@ const Register = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-[#F3FBFB] font-semibold">
+    <div className="flex h-screen items-center justify-center bg-background font-semibold">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit} autoComplete="off">
-          <h3 className="font-bold text-lg text-center text-[#272343]">Register</h3>
+          <h3 className="font-bold text-lg text-center text-text">Register</h3>
 
           {/* Image */}
           {avatar && (
-            <div className="bg-[#BAE8E8] h-24 w-24 mx-auto rounded-full">
+            <div className="bg-background h-24 w-24 mx-auto rounded-full">
               <img
                 src={URL.createObjectURL(avatar)}
                 alt="Avatar"
@@ -103,7 +103,7 @@ const Register = () => {
 
           {/* Username */}
           <div className="mt-4 space-y-1">
-            <label htmlFor="username" className="block text-[#272343] ml-1">
+            <label htmlFor="username" className="block text-text ml-1">
               Username
             </label>
             <input
@@ -122,7 +122,7 @@ const Register = () => {
 
           {/* Email */}
           <div className="mt-4 space-y-1">
-            <label htmlFor="email" className="block text-[#272343] ml-1">
+            <label htmlFor="email" className="block text-text ml-1">
               Email
             </label>
             <input
@@ -141,7 +141,7 @@ const Register = () => {
 
           {/* Role */}
           <div className="mt-4 space-y-1">
-            <label htmlFor="role" className="block text-[#272343] ml-1">
+            <label htmlFor="role" className="block text-text ml-1">
               Role
             </label>
             <select
@@ -159,7 +159,7 @@ const Register = () => {
 
           {/* Password */}
           <div className="mt-4 space-y-1">
-            <label htmlFor="password" className="block text-[#272343] ml-1">
+            <label htmlFor="password" className="block text-text ml-1">
               Password
             </label>
             <div className="relative">
@@ -188,7 +188,7 @@ const Register = () => {
 
           {/* Choose profile photo */}
           <div className="mt-4 space-y-1">
-            <label htmlFor="avatar" className="block text-[#272343] ml-1">
+            <label htmlFor="avatar" className="block text-text ml-1">
               Choose Your Avatar
             </label>
             <input
@@ -208,19 +208,19 @@ const Register = () => {
           <div className="flex justify-around mt-6">
             <button
               type="submit"
-              className={`bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md transition-colors duration-300 ${
-                loading ? 'cursor-not-allowed' : 'hover:bg-[#272343] hover:text-[#F3FBFB]'
+              className={`bg-button-bg text-text px-4 py-2 rounded-md transition-colors duration-300 ${
+                loading ? 'cursor-not-allowed' : 'hover:bg-button-hover-bg hover:text-text'
               }`}
               disabled={loading}
               aria-label="Register"
             >
               {loading ? 'Registering...' : 'Register'}
             </button>
-            <p className="my-auto text-[#272343] font-bold">
+            <p className="my-auto text-text font-bold">
               Already registered?
               <Link
                 to="/login"
-                className="underline text-[#272343] cursor-pointer mx-2 font-semibold"
+                className="underline text-text cursor-pointer mx-2 font-semibold"
                 aria-label="Login"
               >
                 Login

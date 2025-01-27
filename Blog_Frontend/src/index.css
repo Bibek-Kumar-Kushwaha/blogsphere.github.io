@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #272343; /* Slightly brighter and more vivid deep royal blue */
+  --secondary-color: #4B5563; /* Warmer and richer orange for a bolder contrast */
+  --background-color: #F3FBFB; /* Very light and slightly cool tone for a clean backdrop */
+  --accent-color: #349DfF; /* A deeper teal to add a touch of sophistication */
+  --text-color: #272343; /* Slightly darker neutral for better readability */
+  /* --button-text-color: #FFFFFF; White for clarity on button text */
+  --button-bg-color: #FFD803; /* Matching the primary color for consistency */
+  --button-hover-text-color: #FFFFFF; /* White for hover text clarity */
+  --button-hover-bg-color: #F59E0B; /* Matching the secondary color for visual consistency */
+  --link-color: #349D8F; /* Matching the accent color for a cohesive design */
+  --border-color: #CCCCCC; /* Slightly darker border for subtle definition */
+}
+
 body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;

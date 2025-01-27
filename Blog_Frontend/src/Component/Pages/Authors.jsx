@@ -18,8 +18,9 @@ const Authors = () => {
   }, []);
 
   return (
-    <div className="bg-[#F3FBFB] p-4 min-h-screen">
-      <h1 className="text-[#272343] text-2xl font-bold mb-4">Authors</h1>
+    <div className="bg-background p-4 min-h-screen">
+      
+      <h1 className="text-3xl font-bold mb-4 text-center text-text">Authors</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {authors.map(author => (
           <div key={author._id} className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
@@ -28,8 +29,9 @@ const Authors = () => {
               alt={author.username}
               className="w-32 h-32 rounded-full mb-4 object-top object-cover"
             />
-            <div className="text-[#272343] text-center">
+            <div className="text-text text-center">
               <h2 className="text-xl font-semibold uppercase">{author.username}</h2>
+              <p className="text-lg lowercase text-secondary">{author.email}</p>
             </div>
           </div>
         ))}

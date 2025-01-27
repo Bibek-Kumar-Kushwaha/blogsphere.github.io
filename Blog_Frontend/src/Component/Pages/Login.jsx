@@ -64,12 +64,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-[#F3FBFB] font-semibold">
+    <div className="flex h-screen items-center justify-center bg-background font-semibold">
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <form onSubmit={handleSubmit}>
-          <h3 className="font-bold text-lg text-center text-[#272343]">Login</h3>
+          <h3 className="font-bold text-lg text-center text-text">Login</h3>
           <div className="mt-4 space-y-2">
-            <label htmlFor="email" className="block text-[#272343]">Email</label>
+            <label htmlFor="email" className="block text-text">Email</label>
             <input
               type="email"
               id="email"
@@ -83,7 +83,7 @@ const Login = () => {
             />
           </div>
           <div className="mt-4 space-y-2 relative">
-            <label htmlFor="password" className="block text-[#272343]">Password</label>
+            <label htmlFor="password" className="block text-text">Password</label>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -112,17 +112,17 @@ const Login = () => {
           <div className="flex justify-around mt-6">
             <button
               type="submit"
-              className={`bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md transition-colors duration-300 font-semibold ${loading ? 'cursor-not-allowed' : 'hover:bg-[#272343] hover:text-[#F3FBFB]'}`}
+              className={`bg-button-bg text-text px-4 py-2 rounded-md transition-colors duration-300 font-semibold ${loading ? 'cursor-not-allowed' : 'hover:bg-button-hover-bg hover:text-text'}`}
               disabled={loading}
               aria-label="Login"
             >
               {loading ? 'Logging in...' : 'Login'}
             </button>
-            <p className="my-auto text-[#272343] font-bold">
+            <p className="my-auto text-text font-bold">
               Not registered?
               <Link
                 to="/register"
-                className="underline text-[#272343] cursor-pointer mx-2 font-semibold"
+                className="underline text-text cursor-pointer mx-2 font-semibold"
                 aria-label="Register"
               >
                 Register

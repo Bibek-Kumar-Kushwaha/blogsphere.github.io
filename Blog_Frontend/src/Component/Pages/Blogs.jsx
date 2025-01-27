@@ -22,9 +22,9 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="bg-background p-4 min-h-screen">
       <div className="w-[90%]  mx-auto mt-8">
-        <h1 className="text-3xl font-bold mb-4 text-center">Published Blogs</h1>
+        <h1 className="text-3xl font-bold mb-4 text-center text-text">Published Blogs</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map(blog => (
             <div key={blog._id} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -34,9 +34,9 @@ const Blogs = () => {
                 className="w-full h-48 object-cover rounded-t"
               />
               <div className="p-4">
-                <h2 className="text-xl font-bold text-gray-800 mb-2 overflow-hidden text-nowrap text-ellipsis">{blog.title}</h2>
-                <p className="text-sm text-gray-600">Category: {blog.category}</p>
-                <p className="text-sm text-gray-600">Author: {blog.authorName}</p>
+                <h2 className="text-xl font-bold text-text mb-2 overflow-hidden text-nowrap text-ellipsis">{blog.title}</h2>
+                <p className="text-sm text-secondary">Category: {blog.category}</p>
+                <p className="text-sm text-secondary">Author: {blog.authorName}</p>
               </div>
               <div className="w-[90%] flex justify-between m-auto">
                 <div className="">
@@ -44,9 +44,9 @@ const Blogs = () => {
                 </div>
                 <div className="my-auto">
                   <Link to={`singleblog/${blog._id}`}
-                    className='shadow-md shadow-slate-800 bg-[#FFD803] text-[#272343] px-4 py-1 rounded-md text-lg font-semibold hover:bg-[#272343] hover:text-[#F3FBFB] transition-colors duration-300'
+                    className='shadow-md shadow-slate-800 bg-button-bg text-text px-4 py-3 rounded-md text-lg font-semibold hover:hover:bg-button-hover-bg transition-colors duration-300'
                   >
-                    View Me
+                    Read More
                   </Link>
                 </div>
               </div>

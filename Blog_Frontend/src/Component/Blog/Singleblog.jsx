@@ -45,14 +45,14 @@ const SingleBlog = () => {
   } = blog;
 
   return (
-    <div className="w-full bg-background text-primary py-8">
+    <div className="w-full bg-background text-text py-8 ">
       <div className="w-[90%] mx-auto max-w-4xl">
-        <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 uppercase">{title}</div>
+        <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 text-center uppercase">{title}</div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mb-6 font-semibold">
           <div className="mb-4 sm:mb-0 sm:mr-4">
-            <div className="text-sm text-gray-600">Published: {new Date(updatedAt).toDateString()}</div>
-            <div className="text-sm text-gray-600">Category: {category}</div>
+            <div className="text-sm text-secondary">Published: {new Date(updatedAt).toDateString()}</div>
+            <div className="text-sm text-secondary">Category: {category}</div>
           </div>
           <div className="text-center">
             <img
@@ -60,7 +60,7 @@ const SingleBlog = () => {
               alt={`Avatar of ${authorName}`}
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-2"
             />
-            <div className="text-sm text-secondary uppercase">Author : {authorName}</div>
+            <div className="text-sm uppercase">Author : {authorName}</div>
           </div>
         </div>
 
@@ -111,6 +111,7 @@ const SingleBlog = () => {
             <div className="text-base sm:text-lg text-gray-700">{paraThreeDescription}</div>
           </div>
         </div>
+
       </div>
       <Toaster/>
     </div>

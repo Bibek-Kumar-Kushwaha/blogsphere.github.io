@@ -122,13 +122,13 @@ const PostBlog = () => {
 
   return (
     <>
-      <div className=" bg-[#F3FBFB] font-semibold">
+      <div className=" bg-background font-semibold">
         <div className="bg-white p-6 rounded-lg shadow-lg">
-          <h1 className="text-3xl font-bold mb-4 text-center text-[#272343]">Create a New Blog Post</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center text-text">Create a New Blog Post</h1>
           <form onSubmit={handleFormSubmit} className="max-w-lg mx-auto">
 
             <div className="mb-4">
-              <label htmlFor="title" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="title" className="block text-sm font-bold ml-2 text-text">
                 Title
               </label>
               <input
@@ -142,7 +142,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="paraOneTitle" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraOneTitle" className="block text-sm font-bold ml-2 text-text">
                 Title (Paragraph One)
               </label>
               <input
@@ -156,7 +156,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="paraOneIntro" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraOneIntro" className="block text-sm font-bold ml-2 text-text">
                 Introduction (Paragraph One)
               </label>
               <textarea
@@ -170,7 +170,7 @@ const PostBlog = () => {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="paraOneDescription" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraOneDescription" className="block text-sm font-bold ml-2 text-text">
                 Description (Paragraph One)
               </label>
               <textarea
@@ -184,7 +184,7 @@ const PostBlog = () => {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="paraTwoTitle" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraTwoTitle" className="block text-sm font-bold ml-2 text-text">
                 Title (Paragraph Two)
               </label>
               <input
@@ -197,7 +197,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="paraTwoIntro" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraTwoIntro" className="block text-sm font-bold ml-2 text-text">
                 Introduction (Paragraph Two)
               </label>
               <textarea
@@ -210,7 +210,7 @@ const PostBlog = () => {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="paraTwoDescription" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraTwoDescription" className="block text-sm font-bold ml-2 text-text">
                 Description (Paragraph Two)
               </label>
               <textarea
@@ -223,7 +223,7 @@ const PostBlog = () => {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="paraThreeTitle" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraThreeTitle" className="block text-sm font-bold ml-2 text-text">
                 Title (Paragraph Three)
               </label>
               <input
@@ -236,7 +236,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="paraThreeIntro" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraThreeIntro" className="block text-sm font-bold ml-2 text-text">
                 Introduction (Paragraph Three)
               </label>
               <textarea
@@ -249,7 +249,7 @@ const PostBlog = () => {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="paraThreeDescription" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="paraThreeDescription" className="block text-sm font-bold ml-2 text-text">
                 Description (Paragraph Three)
               </label>
               <textarea
@@ -262,7 +262,7 @@ const PostBlog = () => {
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="category" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="category" className="block text-sm font-bold ml-2 text-text">
                 Category
               </label>
               <input
@@ -276,7 +276,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="mainImage" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="mainImage" className="block text-sm font-bold ml-2 text-text">
                 Main Image (Image For Paragraph One)
               </label>
               <input
@@ -290,7 +290,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="secondaryImageOne" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="secondaryImageOne" className="block text-sm font-bold ml-2 text-text">
                 Secondary Image One (Image For Paragraph Two)
               </label>
               <input
@@ -303,7 +303,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="secondaryImageTwo" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="secondaryImageTwo" className="block text-sm font-bold ml-2 text-text">
                 Secondary Image Two (Image For Paragraph Three)
               </label>
               <input
@@ -316,7 +316,7 @@ const PostBlog = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="published" className="block text-sm font-bold ml-2 text-[#272343]">
+              <label htmlFor="published" className="block text-sm font-bold ml-2 text-text">
                 Published
               </label>
               <input
@@ -332,7 +332,7 @@ const PostBlog = () => {
             {error && <div className="mt-4 text-red-600">{error}</div>}
             <button
               type="submit"
-              className={`bg-[#FFD803] text-[#272343] px-4 py-2 rounded-md transition-colors duration-300 ${loading ? 'cursor-not-allowed' : 'hover:bg-[#272343] hover:text-[#F3FBFB]'
+              className={`bg-button-bg text-text px-4 py-2 rounded-md transition-colors duration-300 ${loading ? 'cursor-not-allowed' : 'hover:bg-button-hover-bg hover:text-text'
                 }`}
               disabled={loading}
               aria-label="Post_Blog"

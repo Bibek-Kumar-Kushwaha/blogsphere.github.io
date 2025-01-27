@@ -10,10 +10,10 @@ const Icon = () => {
       {iconList.map((item, index) => (
         <div className="text-6xl font-bold text-center mx-4" key={index}>
           <Link to={item.link} className="flex flex-col items-center">
-            <div className={`m-auto cursor-pointer ${item.className} p-3 rounded-lg transition duration-300 hover:bg-[#BAE8E8]`}>
+            <div className={`m-auto cursor-pointer ${item.className} p-3 rounded-lg transition duration-300 hover:hover:bg-button-hover-bg hover:text-text`}>
               {item.icon}
             </div>
-            <div className="text-center md:text-2xl text-xl font-bold text-[#272343]">{item.name}</div>
+            <div className="text-center md:text-2xl text-xl font-bold text-text">{item.name}</div>
           </Link>
         </div>
       ))}
@@ -35,7 +35,7 @@ const Contact = () => {
         { name, email, message },
         { headers: { 'Content-Type': 'application/json' } }
       );
-      
+
       toast.success('Message sent successfully');
       console.log('Message sent successfully:', response.data);
       setName('');
@@ -52,11 +52,11 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3FBFB]">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto p-8">
-        <div className="text-[#272343] text-[20px] font-bold mb-8">
+        <div className="text-text text-[20px] font-bold mb-8">
           I'm currently open to new opportunities and collaborations. If you have a project idea, want to discuss web development, or just say hello, feel free to reach out.
-          <br/>
+          <br />
           For a quicker response, you can reach me via WhatsApp.
         </div>
 
@@ -65,7 +65,7 @@ const Contact = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 font-bold w-full md:w-[60%] m-auto">
-          <label htmlFor="name" className="block mb-2 text-[#272343]">
+          <label htmlFor="name" className="block mb-2 text-text">
             Name: <input
               type="text"
               placeholder="Enter your name"
@@ -75,7 +75,7 @@ const Contact = () => {
               required
             />
           </label>
-          <label htmlFor="email" className="block mb-2 text-[#272343]">
+          <label htmlFor="email" className="block mb-2 text-text">
             Email: <input
               type="email"
               placeholder="Enter your email"
@@ -85,7 +85,7 @@ const Contact = () => {
               required
             />
           </label>
-          <label htmlFor="message" className="block mb-2 text-[#272343]">
+          <label htmlFor="message" className="block mb-2 text-text">
             Message: <textarea
               placeholder="Enter your message"
               className="border p-2 rounded-md w-full bg-transparent"
@@ -96,9 +96,9 @@ const Contact = () => {
           </label>
 
           <div className="button">
-            <button type="submit" className="text-[15px] md:text-[20px] bg-[#FFD803] hover:bg-[#FFC500] text-[#272343] font-bold rounded w-full p-2">
+            <button type="submit" className="text-[15px] md:text-[20px] bg-button-bg hover:hover:bg-button-hover-bg text-text font-bold rounded w-full p-2">
               SUBMIT
-            </button>      
+            </button>
           </div>
           <Toaster />
         </form>
