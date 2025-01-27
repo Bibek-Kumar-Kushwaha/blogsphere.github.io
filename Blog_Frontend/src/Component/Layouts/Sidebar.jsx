@@ -31,10 +31,10 @@ const Sidebar = () => {
     <div className="w-full h-screen bg-background p-4 flex flex-col items-center">
       {user && (
         <div className="text-center my-4">
-          <img 
-            src={user.avatar.url} 
-            alt="User Avatar" 
-            className="w-32 h-32 rounded-full mx-auto" 
+          <img
+            src={user.avatar.url}
+            alt="User Avatar"
+            className="w-32 h-32 rounded-full mx-auto"
             style={{ backgroundColor: '#BAE8E8' }}
           />
           <h2 className="mt-2 text-xl font-semibold text-text">{user.username}</h2>
@@ -45,35 +45,21 @@ const Sidebar = () => {
         <ul className="w-[90%] mx-auto md:flex gap-x-4 md:justify-center grid grid-cols-2 gap-y-6">
           <li className="flex justify-center">
             <Link to={`/myprofile`} className={buttonClass}>
-              My Profile
+              View Profile
             </Link>
           </li>
           <li className="flex justify-center">
             {user && (
               <Link to={`/myblog/${user._id}`} className={buttonClass}>
-                My Blog
+                View Your Blog
               </Link>
             )}
           </li>
-          {/* <li className="flex justify-center">
-            {user && (
-              <Link to={`/update/${user._id}`} className={buttonClass}>
-                Updated
-              </Link>
-            )}
-          </li> */}
           <li className="flex justify-center">
             <Link to={`/postblog`} className={buttonClass}>
-              Create
+              Create New Blog
             </Link>
           </li>
-          {/* <li className="flex justify-center">
-            {user && (
-              <Link to={`/delete/${user._id}`} className={buttonClass}>
-                Deleted
-              </Link>
-            )}
-          </li> */}
         </ul>
       </nav>
       <Toaster />

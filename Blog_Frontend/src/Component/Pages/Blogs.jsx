@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -21,12 +21,31 @@ const Blogs = () => {
     fetchBlogs();
   }, []);
 
+  // for search blog
+  const filterBlogs = blogs.filter((blog) => {
+    const match = blog.authorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return match;
+  })
+
   return (
     <div className="bg-background p-4 min-h-screen">
       <div className="w-[90%]  mx-auto mt-8">
         <h1 className="text-3xl font-bold mb-4 text-center text-text">Published Blogs</h1>
+        <div className="">
+
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by Title, Category, or Authorname..."
+            className="w-full p-2 my-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map(blog => (
+          {filterBlogs.map(blog => (
             <div key={blog._id} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
               <img
                 src={blog.mainImage.url}
@@ -37,6 +56,7 @@ const Blogs = () => {
                 <h2 className="text-xl font-bold text-text mb-2 overflow-hidden text-nowrap text-ellipsis">{blog.title}</h2>
                 <p className="text-sm text-secondary">Category: {blog.category}</p>
                 <p className="text-sm text-secondary">Author: {blog.authorName}</p>
+                <p className="text-sm text-secondary">Published: {new Date(blog.updatedAt).toDateString()}</p>
               </div>
               <div className="w-[90%] flex justify-between m-auto">
                 <div className="">
