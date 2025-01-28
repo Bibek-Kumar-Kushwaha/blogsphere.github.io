@@ -1,11 +1,12 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { AppContext } from "../../Context/ModeContext";
 
 const Login = () => {
   const { setIsAuth, isAuth } = useContext(AppContext);
+  const navigate = useNavigate();
   const [inputValues, setInputValues] = useState({
     email: '',
     password: ''
@@ -19,6 +20,12 @@ const Login = () => {
     const { name, value } = event.target;
     setInputValues((values) => ({ ...values, [name]: value }));
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/')
+    }
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,6 +69,7 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
 
   return (
     <div className="flex h-screen items-center justify-center bg-background font-semibold">

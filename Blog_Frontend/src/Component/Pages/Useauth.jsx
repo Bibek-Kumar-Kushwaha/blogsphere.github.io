@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 
-const useAuth = () => {
+const Useauth = () => {
   const refreshAccessToken = async () => {
     try {
       const response = await axios.post(
@@ -32,4 +32,4 @@ const useAuth = () => {
   return { refreshAccessToken };
 };
 
-export default useAuth;
+export default Useauth;
