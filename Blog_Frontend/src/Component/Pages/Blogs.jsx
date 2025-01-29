@@ -46,7 +46,7 @@ const Blogs = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filterBlogs.map(blog => (
-            <div key={blog._id} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div key={blog._id} className="bg-white shadow-md rounded p-4">
               <img
                 src={blog.mainImage.url}
                 alt={blog.title}
@@ -58,9 +58,10 @@ const Blogs = () => {
                 <p className="text-sm text-secondary">Author: {blog.authorName}</p>
                 <p className="text-sm text-secondary">Published: {new Date(blog.updatedAt).toDateString()}</p>
               </div>
-              <div className="w-[90%] flex justify-between m-auto">
+              <div className="w-full flex justify-between m-auto">
                 <div className="">
-                  <img src={blog.authorAvatar} alt="" className='w-20 h-20 rounded-full object-cover object-top' />
+                  <img src={blog.authorAvatar} alt="" 
+                  className='w-20 h-20 rounded-full object-cover object-top' />
                 </div>
                 <div className="my-auto">
                   <Link to={`singleblog/${blog._id}`}

@@ -8,12 +8,12 @@ const Icon = () => {
   return (
     <div className="flex flex-wrap justify-center items-center">
       {iconList.map((item, index) => (
-        <div className="text-6xl font-bold text-center mx-4" key={index}>
+        <div className="mx-1" key={index}>
           <Link to={item.link} className="flex flex-col items-center">
-            <div className={`m-auto cursor-pointer ${item.className} p-3 rounded-lg transition duration-300 hover:hover:bg-button-hover-bg hover:text-text`}>
+            <div className={`m-auto cursor-pointer ${item.className} p-1 rounded-lg transition duration-300 hover:hover:bg-button-hover-bg hover:text-text`}>
               {item.icon}
             </div>
-            <div className="text-center md:text-2xl text-xl font-bold text-text">{item.name}</div>
+            <div className="text-center md:text-xl text-xs font-semibold text-text">{item.name}</div>
           </Link>
         </div>
       ))}

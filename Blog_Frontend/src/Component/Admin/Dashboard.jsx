@@ -41,9 +41,9 @@ const Dashboard = () => {
     }
 
   return (
-    <div className="min-h-screen bg-background text-text p-8">
-      <div className="container mx-auto">
-        <h1 className="text-3xl font-bold mb-8">User Dashboard</h1>
+    <div className="min-h-screen bg-background text-text">
+      <div className="mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center pt-2">User Dashboard</h1>
         <div className="mb-8 p-4 bg-background rounded-lg shadow-md">
           <h2 className="text-xl font-semibold">Total Users: {users.total}</h2>
         </div>
