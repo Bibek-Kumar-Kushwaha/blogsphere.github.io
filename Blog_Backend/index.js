@@ -18,6 +18,7 @@ app.use(cors({
     origin: [
         "https://blogsphere-github-io-zqmc.vercel.app",
         "https://www.bibekkumarkushwaha.com.np",
+        "https://portfolio-github-io-a7um.vercel.app",
         "http://localhost:5173"
     ],
     methods: ["GET", "PUT", "DELETE", "POST", "PATCH", "OPTIONS"],
